@@ -28,14 +28,14 @@ public class SecurityConfig {
     protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/user/**").hasRole("USER") // Only users with role USER can access /user/**
+                .antMatchers("/user/**","/boards/**").hasRole("USER") // Only users with role USER can access /user/**
                 .antMatchers("/admin/**").hasRole("ADMIN") // Only users with role ADMIN can access /admin/**
                 .antMatchers("/login", "/register", "/").permitAll() // Allow public access to login, register, and home page
                 .anyRequest().authenticated() // All other requests need to be authenticated
                 .and()
                 .formLogin()
                 .loginPage("/login") // Custom login page
-                .defaultSuccessUrl("/user/list") // Redirect to user list after successful login
+                .defaultSuccessUrl("/boards/list") // Redirect to user list after successful login
                 .permitAll()
                 .and()
                 .logout()

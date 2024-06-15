@@ -6617,6 +6617,24 @@ button.bg-dark:focus {
 .rounded-0 {
   border-radius: 0 !important;
 }
+.nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  background: none;
+  border: none;
+  z-index: 100;
+}
+
+#scrollLeft {
+  left: 0;
+}
+
+#scrollRight {
+  right: 0;
+}
+
 
 .clearfix::after {
   display: block;

@@ -4,11 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pl.coderslab.board.Board;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 
 @Getter
@@ -23,4 +21,8 @@ public class Links {
     private String url;
     private String title;
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "board_id")
+    private Board board;
 }
