@@ -6621,10 +6621,20 @@ button.bg-dark:focus {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 2rem;
-  background: none;
+  font-size: 1.5rem;
+  background: #dfb1c7;
   border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
   z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-arrow i {
+  color: #dfb1c7;
 }
 
 #scrollLeft {
@@ -6633,6 +6643,18 @@ button.bg-dark:focus {
 
 #scrollRight {
   right: 0;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#wrapper {
+  min-height: 100vh;
+  position: relative; /* Konieczne, jeśli używasz position: absolute w innych elementach */
+  background-color: #f8f9fc; /* Domyślny kolor tła */
 }
 
 

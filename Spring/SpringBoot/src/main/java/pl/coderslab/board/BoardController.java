@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pl.coderslab.recipes.Links;
+import pl.coderslab.recipes.LinksDao;
 import pl.coderslab.user.User;
 import pl.coderslab.user.UserService;
 
@@ -19,6 +21,8 @@ public class BoardController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private LinksDao linksDao;
 
     @GetMapping("/add")
     public String showAddBoardForm(Model model) {
@@ -88,4 +92,18 @@ public class BoardController {
     private User getCurrentUser(Principal principal) {
         return userService.findByUserName(principal.getName());
     }
+
+    @GetMapping("/{id}/links")
+    public String viewBoardLinks(@PathVariable("id") Long id, Model model, Principal principal) {
+        User user = getCurrentUser(principal);
+        Board board = boardRepository.findById(id).orElse(null);
+        if (board == null || !board.getUser().getId().equals(user.getId())) {
+            return "redirect:/boards/list";
+        }
+        List<Links> links = linksDao.findAllByBoardId(id); // Dodajemy metodę do LinksDao
+        model.addAttribute("board", board);
+        model.addAttribute("links", links);
+        return "board/boardLinks"; // Nowy widok do wyświetlania linków tablicy
+    }
+
 }

@@ -35,4 +35,11 @@ public class LinksDao {
     public void delete(Links links){
         em.remove(em.contains(links) ? links : em.merge(links));
     }
+    public List<Links> findAllByBoardId(Long boardId) {
+        // Implementacja pobierania linków według ID tablicy
+        return em.createQuery("SELECT l FROM Links l WHERE l.board.id = :boardId", Links.class)
+                .setParameter("boardId", boardId)
+                .getResultList();
+    }
+
 }

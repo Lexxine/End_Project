@@ -35,16 +35,21 @@ public class HomeController {
             @RequestParam("boardId") Long boardId) {
 
         Board board = boardRepository.findById(boardId).orElse(null);
+
+
         Links newLink = new Links();
         newLink.setUrl(paramName);
         newLink.setTitle(paramTitle);
         newLink.setDescription(paramDescription);
+      //  newLink.setId(boardId);
         newLink.setBoard(board);
 
         linksDao.save(newLink); // Użycie metody z klasy DAO
 
-        return "redirect:/user/list";
+        return "redirect:/boards/list";
+      //  return "redirect:/boards/boardId/links";
     }
+
 
     @GetMapping("/list")
     public String list(Model model) {
