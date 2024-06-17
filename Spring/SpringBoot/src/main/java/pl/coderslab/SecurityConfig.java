@@ -28,22 +28,22 @@ public class SecurityConfig {
     protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/user/**","/boards/**").hasRole("USER") // Only users with role USER can access /user/**
-                .antMatchers("/admin/**").hasRole("ADMIN") // Only users with role ADMIN can access /admin/**
-                .antMatchers("/login", "/register", "/").permitAll() // Allow public access to login, register, and home page
-                .anyRequest().authenticated() // All other requests need to be authenticated
+                .antMatchers("/user/**","/boards/**").hasRole("USER")
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/login", "/register", "/").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login") // Custom login page
-                .defaultSuccessUrl("/boards/list") // Redirect to user list after successful login
+                .defaultSuccessUrl("/boards/list")
                 .permitAll()
                 .and()
                 .logout()
-                .logoutSuccessUrl("/") // Redirect to home page after logout
+                .logoutSuccessUrl("/")
                 .permitAll()
                 .and()
                 .exceptionHandling()
-                .accessDeniedPage("/403"); // Custom access denied page
+                .accessDeniedPage("/403");
 
         return http.build();
     }

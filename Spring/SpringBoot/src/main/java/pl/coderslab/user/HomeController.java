@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.coderslab.board.Board;
 import pl.coderslab.board.BoardRepository;
 import pl.coderslab.recipes.Links;
-import pl.coderslab.recipes.LinksDao; // Import klasy DAO
+import pl.coderslab.recipes.LinksDao;
 
 import java.util.List;
 
@@ -36,39 +36,37 @@ public class HomeController {
 
         Board board = boardRepository.findById(boardId).orElse(null);
 
-
         Links newLink = new Links();
         newLink.setUrl(paramName);
         newLink.setTitle(paramTitle);
         newLink.setDescription(paramDescription);
-      //  newLink.setId(boardId);
         newLink.setBoard(board);
 
-        linksDao.save(newLink); // Użycie metody z klasy DAO
+        linksDao.save(newLink);
 
-        return "redirect:/boards/list";
-      //  return "redirect:/boards/boardId/links";
+        return "redirect:/boards/" + boardId + "/links";
     }
 
 
     @GetMapping("/list")
     public String list(Model model) {
-        List<Links> linksList = linksDao.findAll(); // Użycie metody z klasy DAO
+        List<Links> linksList = linksDao.findAll();
         model.addAttribute("links", linksList);
         return "list2";
     }
 
     @PostMapping("/delete/{id}")
     public String deleteLink(@PathVariable("id") Long id) {
-        Links linkToDelete = linksDao.findById(id); // Użycie metody z klasy DAO
-        linksDao.delete(linkToDelete); // Użycie metody z klasy DAO
-        return "redirect:/user/list";
+        Links linkToDelete = linksDao.findById(id);
+        linksDao.delete(linkToDelete);
+        return "redirect:/boards/list";
     }
 
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable("id") Long id, Model model) {
-        Links link = linksDao.findById(id); // Użycie metody z klasy DAO
+        Links link = linksDao.findById(id);
         model.addAttribute("link", link);
+        model.addAttribute("boards", boardRepository.findAll());
         return "editForm";
     }
 
@@ -81,14 +79,18 @@ public class HomeController {
             @RequestParam("boardId") Long boardId) {
 
         Board board = boardRepository.findById(boardId).orElse(null);
-        Links link = linksDao.findById(id); // Użycie metody z klasy DAO
+        if (board == null) {
+            return "redirect:/user/edit/" + id + "?error=boardNotFound";
+        }
+
+        Links link = linksDao.findById(id);
         link.setUrl(paramName);
         link.setTitle(paramTitle);
         link.setDescription(paramDescription);
         link.setBoard(board);
 
-        linksDao.update(link); // Użycie metody z klasy DAO
+        linksDao.update(link);
 
-        return "redirect:/user/list";
+        return "redirect:/boards/" + boardId + "/links";
     }
 }

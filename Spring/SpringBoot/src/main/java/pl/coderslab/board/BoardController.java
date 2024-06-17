@@ -18,7 +18,6 @@ public class BoardController {
 
     @Autowired
     private BoardRepository boardRepository;
-
     @Autowired
     private UserService userService;
     @Autowired
@@ -100,10 +99,10 @@ public class BoardController {
         if (board == null || !board.getUser().getId().equals(user.getId())) {
             return "redirect:/boards/list";
         }
-        List<Links> links = linksDao.findAllByBoardId(id); // Dodajemy metodę do LinksDao
+        List<Links> links = linksDao.findAllByBoardId(id);
         model.addAttribute("board", board);
         model.addAttribute("links", links);
-        return "board/boardLinks"; // Nowy widok do wyświetlania linków tablicy
+        return "board/boardLinks";
     }
 
 }

@@ -4,7 +4,7 @@
 
 <h2>Dodaj Tablicę</h2>
 
-<form:form modelAttribute="board" action="${pageContext.request.contextPath}/boards/add" method="post">
+<form:form modelAttribute="board" action="/boards/add" method="post">
     <div>
         <form:label path="name">Tytuł</form:label>
         <form:input path="name" />
