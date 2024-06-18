@@ -96,13 +96,14 @@
             background-color: rgba(219, 185, 204, 0.75);
             border-color: rgba(219, 185, 204, 0.75);
         }
+        .error {
+            font-size: 14px;
+        }
     </style>
 </head>
 
 <body id="page-top">
 
-<!-- Przycisk w prawym górnym rogu -->
-<a href="/register" class="btn btn-sm btn-danger top-right-button">Zarejestruj się</a>
 
 
 <!-- Content Wrapper -->
@@ -115,15 +116,18 @@
         <div class="container-fluid text-center">
 
             <!-- Page Heading -->
-            <h1 class="h3 mb-0 text-gray-800">Zaloguj się</h1>
+            <h1 class="h3 mb-0 text-gray-800">Zarejestruj się</h1>
 
             <!-- Your content here -->
             <div class="content-container" id="login-form">
 
-                <form method="post">
+                <form action="/register" method="post">
                     <div><label> Nazwa użytkownika : <input type="text" name="username"/> </label></div>
                     <div><label> Hasło: <input type="password" name="password"/> </label></div>
-                    <div><input type="submit" value="Zaloguj się" class="styled-button"/></div>
+                    <div><input type="submit" value="Zarejestruj się" class="styled-button"/></div>
+                    <div>
+                        <span class="error"><c:out value="${error}"/></span>
+                    </div>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </form>
 

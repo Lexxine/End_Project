@@ -41,8 +41,13 @@
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-800">Tablice</h1>
-                    <a href="/boards/add" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Dodaj tablicę</a>
+                    <div class="d-flex flex-column">
+                        <a href="/boards/add" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm mb-2">Dodaj tablicę</a>
+                        <a href="/login" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Wyloguj</a>
+                    </div>
                 </div>
+
+
                 <!-- Content Section -->
                 <div class="board-container">
                     <button id="scrollLeft" class="nav-arrow"><i class="fas fa-chevron-left"></i></button>
