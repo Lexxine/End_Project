@@ -6,6 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.recipes.Links;
 import pl.coderslab.recipes.LinksDao;
+import pl.coderslab.spoonacular.Recipe;
+import pl.coderslab.spoonacular.SpoonacularService;
 import pl.coderslab.user.User;
 import pl.coderslab.user.UserService;
 
@@ -22,6 +24,8 @@ public class BoardController {
     private UserService userService;
     @Autowired
     private LinksDao linksDao;
+    @Autowired
+    SpoonacularService spoonacularService;
 
     @GetMapping("/add")
     public String showAddBoardForm(Model model) {
@@ -45,12 +49,17 @@ public class BoardController {
     }
 
     @GetMapping("/list")
-    public String listBoards(Model model, Principal principal) {
+    public String displayBoardsAndRecipes(Model model, Principal principal) {
         User user = getCurrentUser(principal);
         List<Board> boards = boardRepository.findAllByUserId(user.getId());
         model.addAttribute("boards", boards);
+
+        List<Recipe> recipes = spoonacularService.getRecipes();
+        model.addAttribute("recipes", recipes);
+
         return "board/list2Board";
     }
+
 
     @PostMapping("/delete/{id}")
     public String deleteBoard(@PathVariable Long id, Principal principal) {
@@ -104,5 +113,7 @@ public class BoardController {
         model.addAttribute("links", links);
         return "board/boardLinks";
     }
+
+
 
 }

@@ -11,18 +11,90 @@
     <title>SB Admin 2 - Tablice</title>
     <!-- Custom fonts for this template-->
     <link href="<c:url value="/resources/vendor/fontawesome-free/css/all.min.css"/>" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="<c:url value="/resources/css/sb-admin-2.css"/>" rel="stylesheet">
 
     <style>
-        .board-item { display: none; }
-        .board-item.visible { display: block; }
-        .board-container { display: flex; overflow: hidden; position: relative; }
-        .board-wrapper { display: flex; transition: transform 0.5s ease; }
-        .nav-arrow { position: absolute; top: 50%; transform: translateY(-50%); font-size: 2rem; background: none; border: none; }
-        #scrollLeft { left: 0; }
-        #scrollRight { right: 0; }
+        .board-item {
+            display: none;
+        }
+
+        .board-item.visible {
+            display: block;
+        }
+
+        .board-container {
+            display: flex;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .board-wrapper {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            background: none;
+            border: none;
+        }
+
+        #scrollLeft {
+            left: 0;
+        }
+
+        #scrollRight {
+            right: 0;
+        }
+
+        /* New styles for the recipe section */
+        .recipe-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .recipe-item {
+            position: relative;
+            width: 250px; /* Fixed width */
+            height: 300px; /* Fixed height */
+            overflow: hidden;
+            border-radius: 10px;
+            flex: 0 0 auto;
+        }
+
+        .recipe-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .recipe-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 15px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .recipe-item:hover .recipe-info {
+            transform: translateY(0);
+        }
+
+        .container-fluid {
+            background-color: white;
+        }
     </style>
 </head>
 <body id="page-top">
@@ -34,7 +106,7 @@
         <!-- Main Content -->
         <div id="content">
             <!-- Topbar -->
-            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"></nav>
+            <!--   <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"></nav> -->
             <!-- End of Topbar -->
             <!-- Begin Page Content -->
             <div class="container-fluid">
@@ -42,11 +114,11 @@
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-800">Tablice</h1>
                     <div class="d-flex flex-column">
-                        <a href="/boards/add" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm mb-2">Dodaj tablicę</a>
+                        <a href="/boards/add" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm mb-2" style="margin-top: 20px;">Dodaj tablicę</a>
+
                         <a href="/login" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Wyloguj</a>
                     </div>
                 </div>
-
 
                 <!-- Content Section -->
                 <div class="board-container">
@@ -54,20 +126,28 @@
                     <div class="board-wrapper" id="boardWrapper">
                         <c:forEach var="board" items="${boards}" varStatus="status">
                             <div class="col-xl-3 col-md-6 mb-4 board-item ${status.index < 3 ? 'visible' : ''}">
-                                <div class="card border-left-primary shadow h-100 py-2" style="border-left-color: #DBB9CC;">
+                                <div class="card border-left-primary shadow h-100 py-2"
+                                     style="border-left-color: #DBB9CC;">
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
-                                                <a href="/boards/${board.id}/links" class="text-xs font-weight-bold text-primary text-uppercase mb-1" style="color: #DBB9CC;">${board.name}</a>
+                                                <a href="/boards/${board.id}/links"
+                                                   class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+                                                   style="color: #DBB9CC;">${board.name}</a>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">${board.description}</div>
                                             </div>
                                         </div>
                                         <div class="row mt-3">
                                             <div class="col text-center">
-                                                <a href="/boards/edit/${board.id}" class="btn btn-sm edit-btn mr-2" style="background-color: #DBB9CC; color: white; display: none;">Edytuj</a>
-                                                <form action="${pageContext.request.contextPath}/boards/delete/${board.id}" method="post" style="display: none;">
-                                                    <input type="submit" class="btn btn-sm delete-btn" style="background-color: #DBB9CC; color: white;" value="Usuń" onclick="return confirm('Czy na pewno chcesz usunąć ten link?');">
-                                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                                <a href="/boards/edit/${board.id}" class="btn btn-sm edit-btn mr-2"
+                                                   style="background-color: #DBB9CC; color: white; display: none;">Edytuj</a>
+                                                <form action="${pageContext.request.contextPath}/boards/delete/${board.id}"
+                                                      method="post" style="display: none;">
+                                                    <input type="submit" class="btn btn-sm delete-btn"
+                                                           style="background-color: #DBB9CC; color: white;" value="Usuń"
+                                                           onclick="return confirm('Czy na pewno chcesz usunąć ten link?');">
+                                                    <input type="hidden" name="${_csrf.parameterName}"
+                                                           value="${_csrf.token}"/>
                                                 </form>
                                             </div>
                                         </div>
@@ -75,56 +155,62 @@
                                 </div>
                             </div>
                         </c:forEach>
-
                     </div>
                     <button id="scrollRight" class="nav-arrow"><i class="fas fa-chevron-right"></i></button>
                 </div>
-            </div>
-            <!-- Footer -->
-           <!-- <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
-                    </div>
-                </div>
-            </footer> -->
-            <!-- End of Footer -->
-        </div>
-        <!-- End of Content Wrapper -->
-    </div>
-    <!-- End of Page Wrapper -->
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Bootstrap core JavaScript-->
-    <script src="<c:url value="/resources/vendor/jquery/jquery.min.js"/>"></script>
-    <script src="<c:url value="/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
-    <!-- Core plugin JavaScript-->
-    <script src="<c:url value="/resources/vendor/jquery-easing/jquery.easing.min.js"/>"></script>
-    <!-- Custom scripts for all pages-->
-    <script src="<c:url value="/resources/js/sb-admin-2.min.js"/>"></script>
-    <!-- Custom Scroll Script -->
-    <script src="<c:url value="/resources/js/demo/board-scroll.js"/>"></script>
 
+                <!-- Recipe Section -->
+                <h1>Lista przepisów</h1>
+                <div class="d-flex flex-wrap">
+                    <c:forEach var="recipe" items="${recipes}">
+                        <div class="recipe-item col-xl-3 col-md-6 mb-4">
+                            <img src="${recipe.image}" alt="${recipe.title}">
+                            <div class="recipe-info">
+                                <h2>${recipe.title}</h2>
+                                <p>${recipe.summary}</p>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="login.html">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript-->
+<script src="<c:url value="/resources/vendor/jquery/jquery.min.js"/>"></script>
+<script src="<c:url value="/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
+<!-- Core plugin JavaScript-->
+<script src="<c:url value="/resources/vendor/jquery-easing/jquery.easing.min.js"/>"></script>
+<!-- Custom scripts for all pages-->
+<script src="<c:url value="/resources/js/sb-admin-2.min.js"/>"></script>
+<!-- Custom Scroll Script -->
+<script src="<c:url value="/resources/js/demo/board-scroll.js"/>"></script>
+
 </body>
 </html>
