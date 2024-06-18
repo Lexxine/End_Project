@@ -26,6 +26,8 @@ public class BoardController {
     private LinksDao linksDao;
     @Autowired
     SpoonacularService spoonacularService;
+//    @Autowired
+//    EdamamRecipeService edamamRecipeService;
 
     @GetMapping("/add")
     public String showAddBoardForm(Model model) {
@@ -54,8 +56,8 @@ public class BoardController {
         List<Board> boards = boardRepository.findAllByUserId(user.getId());
         model.addAttribute("boards", boards);
 
-        List<Recipe> recipes = spoonacularService.getRecipes();
-        model.addAttribute("recipes", recipes);
+//        List<Recipe> recipes = edamamService.getRecipes();
+//        model.addAttribute("recipes", recipes);
 
         return "board/list2Board";
     }
