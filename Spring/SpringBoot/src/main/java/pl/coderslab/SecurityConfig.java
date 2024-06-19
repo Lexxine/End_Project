@@ -34,17 +34,17 @@ public class SecurityConfig {
     protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/user/**", "/boards/**").hasRole("USER")
+            //    .antMatchers("/user/**", "/boards/**").hasRole("USER")
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/login", "/register", "/search").permitAll()
-                .anyRequest().authenticated()
+             //   .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login") // Custom login page
                 .defaultSuccessUrl("/boards/list")
                 .permitAll()
-                .and().logout().logoutSuccessUrl("/login")
-                .permitAll();
+                .and().logout().logoutSuccessUrl("/login");
+              //  .permitAll();
         return http.build();
     }
 

@@ -62,8 +62,8 @@
 
         .recipe-item {
             position: relative;
-            width: 250px; /* Fixed width */
-            height: 300px; /* Fixed height */
+            width: 350px; /* Fixed width */
+            height: 400px; /* Fixed height */
             overflow: hidden;
             border-radius: 10px;
             flex: 0 0 auto;
@@ -164,10 +164,10 @@
                 <div class="d-flex flex-wrap">
                     <c:forEach var="recipe" items="${recipes}">
                         <div class="recipe-item col-xl-3 col-md-6 mb-4">
-                            <img src="${recipe.image}" alt="${recipe.title}">
+                            <img src="${recipe.imageUrl}" alt="${recipe.name}">
                             <div class="recipe-info">
-                                <h2>${recipe.title}</h2>
-                                <p>${recipe.summary}</p>
+                                <h2>${recipe.name}</h2>
+                                <p>${recipe.source}</p>
                             </div>
                         </div>
                     </c:forEach>

@@ -4,13 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pl.coderslab.edamam.EdamamService;
+import pl.coderslab.edamam.Recipe;
 import pl.coderslab.recipes.Links;
 import pl.coderslab.recipes.LinksDao;
-import pl.coderslab.spoonacular.Recipe;
 import pl.coderslab.spoonacular.SpoonacularService;
 import pl.coderslab.user.User;
 import pl.coderslab.user.UserService;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
@@ -26,8 +28,8 @@ public class BoardController {
     private LinksDao linksDao;
     @Autowired
     SpoonacularService spoonacularService;
-//    @Autowired
-//    EdamamRecipeService edamamRecipeService;
+    @Autowired
+    EdamamService edamamService;
 
     @GetMapping("/add")
     public String showAddBoardForm(Model model) {
@@ -51,11 +53,13 @@ public class BoardController {
     }
 
     @GetMapping("/list")
-    public String displayBoardsAndRecipes(Model model, Principal principal) {
+    public String displayBoardsAndRecipes(@RequestParam(required = false, defaultValue = "salad") String query, Model model, Principal principal) throws
+            IOException {
         User user = getCurrentUser(principal);
         List<Board> boards = boardRepository.findAllByUserId(user.getId());
         model.addAttribute("boards", boards);
-
+        List<Recipe> recipes = edamamService.getRecipes(query);
+        model.addAttribute("recipes", recipes);
 //        List<Recipe> recipes = edamamService.getRecipes();
 //        model.addAttribute("recipes", recipes);
 
@@ -115,7 +119,6 @@ public class BoardController {
         model.addAttribute("links", links);
         return "board/boardLinks";
     }
-
 
 
 }

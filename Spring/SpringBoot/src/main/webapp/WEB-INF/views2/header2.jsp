@@ -96,6 +96,9 @@
             background-color: rgba(219, 185, 204, 0.75);
             border-color: rgba(219, 185, 204, 0.75);
         }
+        .error{
+            font-size: 18px;
+        }
     </style>
 </head>
 
@@ -124,6 +127,7 @@
                     <div><label> Nazwa użytkownika : <input type="text" name="username"/> </label></div>
                     <div><label> Hasło: <input type="password" name="password"/> </label></div>
                     <div><input type="submit" value="Zaloguj się" class="styled-button"/></div>
+                    <div><span class="error">${error}</span></div>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </form>
 

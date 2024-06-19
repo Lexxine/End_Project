@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="pl">
@@ -121,15 +122,16 @@
             <!-- Your content here -->
             <div class="content-container" id="login-form">
 
-                <form action="/register" method="post">
-                    <div><label> Nazwa użytkownika : <input type="text" name="username"/> </label></div>
-                    <div><label> Hasło: <input type="password" name="password"/> </label></div>
-                    <div><input type="submit" value="Zarejestruj się" class="styled-button"/></div>
-                    <div>
-                        <span class="error"><c:out value="${error}"/></span>
-                    </div>
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                </form>
+
+                <form:form method="post" modelAttribute="user" action="/register">
+                    <div><label>Nazwa użytkownika: <form:input type="text" path="username" /></label></div>
+                    <div class="error"><form:errors path="username" /></div>
+                    <div><label>Hasło: <form:input type="password" path="password" /></label></div>
+                    <div class="error"><form:errors path="password" /></div>
+                    <div><input type="submit" value="Zarejestruj się" class="styled-button" /></div>
+                    <div><span class="error"><c:out value="${error}" /></span></div>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                </form:form>
 
             </div>
 
