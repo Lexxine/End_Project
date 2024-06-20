@@ -1,8 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -274,7 +279,14 @@
                         </div>
                     </c:forEach>
                 </div>
-<%--            </div>--%>
+                <form id="nextPageForm" action="/boards/list" method="GET">
+                    <input type="hidden" name="query" value="${query}"/>
+                    <input type="hidden" name="nextLink" value="${nextLink}"/>
+                    <button type="submit" class="btn btn-primary">Next Page</button>
+                </form>
+
+
+            <%--            </div>--%>
 <%--        </div>--%>
     </div>
 </div>

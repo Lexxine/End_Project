@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.w3c.dom.css.CSSImportRule;
 import pl.coderslab.board.Board;
 
 import javax.persistence.*;
@@ -25,4 +26,5 @@ public class Links {
     @ManyToOne
     @JoinColumn(name = "board_id")
     private Board board;
+
 }

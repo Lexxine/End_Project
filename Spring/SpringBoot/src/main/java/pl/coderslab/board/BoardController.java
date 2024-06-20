@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.edamam.EdamamService;
+import pl.coderslab.edamam.PaginatedRecipes;
 import pl.coderslab.edamam.Recipe;
 import pl.coderslab.recipes.Links;
 import pl.coderslab.recipes.LinksDao;
@@ -53,17 +54,23 @@ public class BoardController {
     }
 
     @GetMapping("/list")
-    public String displayBoardsAndRecipes(@RequestParam(required = false, defaultValue = "healthy") String query, Model model,
-                                          Principal principal) throws IOException
-            {
+    public String displayBoardsAndRecipes(@RequestParam(required = false, defaultValue = "healthy") String query,
+                                          @RequestParam(required = false) String nextLink, Model model,
+
+                                          Principal principal) throws IOException {
         User user = getCurrentUser(principal);
         List<Board> boards = boardRepository.findAllByUserId(user.getId());
         model.addAttribute("boards", boards);
-        List<Recipe> recipes = edamamService.getRecipes(query);
-        model.addAttribute("recipes", recipes);
-//        List<Recipe> recipes = edamamService.getRecipes();
-//        model.addAttribute("recipes", recipes);
+        List<Recipe> recipes;
+        if (nextLink != null && !nextLink.isEmpty()) {
+            recipes = edamamService.getRecipesWithPagination(nextLink);
+        } else {
+            recipes = edamamService.getRecipesWithPagination(query);
+        }
 
+        model.addAttribute("recipes", recipes);
+        model.addAttribute("nextLink", edamamService.getNextLink());
+        model.addAttribute("query", query);
         return "board/list2Board";
     }
 

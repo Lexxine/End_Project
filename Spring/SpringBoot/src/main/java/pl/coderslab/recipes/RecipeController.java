@@ -24,8 +24,8 @@ public class RecipeController {
     @GetMapping("/recipes")
     public String showRecipes(@RequestParam(required = false, defaultValue = "salad") String query,
                               Model model) throws IOException {
-        List<Recipe> recipes = edamamService.getRecipes(query);
-        model.addAttribute("recipes", recipes);
+//        List<Recipe> recipes = edamamService.getRecipes(query);
+//        model.addAttribute("recipes", recipes);
         return "recipes2";
     }
 }
