@@ -1,29 +1,21 @@
 package pl.coderslab.edamam;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Recipe {
     private String name;
     private String imageUrl;
     private String source;
+    private int calories;
+    private int carbs;
+    private int protein;
+    private int fat;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-    public void setSource(String source){
-        this.imageUrl = source;
-    }
-    public String getSource() {
-        return source;
-    }
 }

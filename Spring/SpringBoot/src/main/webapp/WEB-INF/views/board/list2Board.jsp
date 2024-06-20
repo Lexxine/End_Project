@@ -17,6 +17,7 @@
     <link href="<c:url value="/resources/css/sb-admin-2.css"/>" rel="stylesheet">
 
     <style>
+        /* General styles */
         .board-item {
             display: none;
         }
@@ -53,27 +54,57 @@
             right: 0;
         }
 
-        /* New styles for the recipe section */
-        .recipe-container {
+        /* Styles for the recipe section */
+        .recipes-container {
+            max-width: 1500px; /* Maksymalna szerokość kontenera przepisów */
+            margin: 0 auto; /* Wyśrodkowanie kontenera na ekranie */
+            padding: 0 15px; /* Dodatkowe paddingi po bokach */
             display: flex;
             flex-wrap: wrap;
-            gap: 15px;
+            justify-content: space-around; /* Wycentrowanie elementów na ekranie */
+
         }
 
         .recipe-item {
             position: relative;
-            width: 350px; /* Fixed width */
-            height: 400px; /* Fixed height */
+            width: 300px;
+            height: 310px;
             overflow: hidden;
             border-radius: 10px;
             flex: 0 0 auto;
+
+        }
+
+        .recipe-item:hover {
+            background-color: white; /* White background on hover */
+            border: 1px solid #ccc; /* Gray border color on hover */
         }
 
         .recipe-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 10px;
+            width: 65%; /* Redukcja szerokości obrazka */
+            height: 65%; /* Redukcja wysokości obrazka */
+            position: absolute;
+            top: 5%; /* Ustawienie odległości od góry */
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 65%;
+
+        }
+        .recipe-info h5 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+            .recipe-item:hover img {
+            width: 40%; /* Redukcja szerokości obrazka */
+            height: 40%; /* Redukcja wysokości obrazka */
+            position: absolute;
+            top: 5%; /* Ustawienie odległości od góry */
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 50%;
         }
 
         .recipe-info {
@@ -81,21 +112,65 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 15px;
+            background-color: white;
             transform: translateY(100%);
             transition: transform 0.3s ease;
+            text-align: center;
+
         }
 
         .recipe-item:hover .recipe-info {
             transform: translateY(0);
         }
 
+        .nutrition-info {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+
+        .nutrition-item {
+            text-align: center;
+            margin-right: 15px;
+            padding: 5px 0;
+        }
+
+        .nutrition-item span {
+            font-weight: bold;
+        }
+
+        .nutrition-label {
+            display: block;
+            font-size: 0.9em;
+            color: #808080;
+            margin-top: 5px;
+        }
+
         .container-fluid {
             background-color: white;
+            padding: 20px; /* Added padding for content spacing */
         }
+        .recipe-name-overlay {
+            position: absolute;
+            top: 90%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60%;
+            text-align: center;
+        }
+        .recipe-item:hover::before {
+            content: "\f004"; /* Kod ikony serduszka z Font Awesome */
+            font-family: "Font Awesome 6 Free"; /* Używana rodzina czcionek */
+            position: absolute; /* Pozycja absolutna w kontenerze rodzica */
+            top: 10px; /* Odległość od górnej krawędzi */
+            right: 10px; /* Odległość od prawej krawędzi */
+            font-size: 1.5rem; /* Rozmiar ikony */
+            color: #808080; /* Kolor ikony */
+            z-index: 1; /* Głębokość warstwy (nad tłem) */
+        }
+
     </style>
+
 </head>
 <body id="page-top">
 <!-- Page Wrapper -->
@@ -114,7 +189,8 @@
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-800">Tablice</h1>
                     <div class="d-flex flex-column">
-                        <a href="/boards/add" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm mb-2" style="margin-top: 20px;">Dodaj tablicę</a>
+                        <a href="/boards/add" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm mb-2"
+                           style="margin-top: 20px;">Dodaj tablicę</a>
 
                         <a href="/login" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Wyloguj</a>
                     </div>
@@ -161,19 +237,45 @@
 
                 <!-- Recipe Section -->
                 <h1>Lista przepisów</h1>
-                <div class="d-flex flex-wrap">
+                <div class="recipes-container">
+<%--                <div id="recipes-container" class="d-flex flex-wrap"></div>--%>
+<%--&lt;%&ndash;                <button formaction="/boards/list" id="load-more" class="btn btn-primary">Load More</button>&ndash;%&gt;--%>
+<%--                <div class="d-flex flex-wrap ">--%>
                     <c:forEach var="recipe" items="${recipes}">
-                        <div class="recipe-item col-xl-3 col-md-6 mb-4">
+                        <div class="recipe-item">
                             <img src="${recipe.imageUrl}" alt="${recipe.name}">
+                            <div class="recipe-name-overlay">
+                                <h5>${recipe.name}</h5>
+                            </div>
                             <div class="recipe-info">
-                                <h2>${recipe.name}</h2>
-                                <p>${recipe.source}</p>
+                                <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+                                <h5>${recipe.name}</h5>
+                                <p>Wartosć odżywcza na 1 porcję:</p>
+                                <div class="nutrition-info">
+                                    <div class="nutrition-item">
+                                        <span>${recipe.calories}</span>
+                                        <div class="nutrition-label">kcal</div>
+                                    </div>
+                                    <div class="nutrition-item">
+                                        <span>${recipe.carbs}</span>
+                                        <div class="nutrition-label">W</div>
+                                    </div>
+                                    <div class="nutrition-item">
+                                        <span>${recipe.protein}</span>
+                                        <div class="nutrition-label">B</div>
+                                    </div>
+                                    <div class="nutrition-item">
+                                        <span>${recipe.fat}</span>
+                                        <div class="nutrition-label">T</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </c:forEach>
                 </div>
-            </div>
-        </div>
+<%--            </div>--%>
+<%--        </div>--%>
     </div>
 </div>
 

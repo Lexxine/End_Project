@@ -53,8 +53,9 @@ public class BoardController {
     }
 
     @GetMapping("/list")
-    public String displayBoardsAndRecipes(@RequestParam(required = false, defaultValue = "salad") String query, Model model, Principal principal) throws
-            IOException {
+    public String displayBoardsAndRecipes(@RequestParam(required = false, defaultValue = "healthy") String query, Model model,
+                                          Principal principal) throws IOException
+            {
         User user = getCurrentUser(principal);
         List<Board> boards = boardRepository.findAllByUserId(user.getId());
         model.addAttribute("boards", boards);
