@@ -4,9 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.coderslab.edamam.EdamamService;
-import pl.coderslab.edamam.PaginatedRecipes;
-import pl.coderslab.edamam.Recipe;
+import pl.coderslab.edamam.*;
 import pl.coderslab.recipes.Links;
 import pl.coderslab.recipes.LinksDao;
 import pl.coderslab.spoonacular.SpoonacularService;
@@ -14,6 +12,9 @@ import pl.coderslab.user.User;
 import pl.coderslab.user.UserService;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 import java.util.List;
 
@@ -31,6 +32,8 @@ public class BoardController {
     SpoonacularService spoonacularService;
     @Autowired
     EdamamService edamamService;
+    @Autowired
+    RecipyDao recipyDao;
 
     @GetMapping("/add")
     public String showAddBoardForm(Model model) {
@@ -123,8 +126,10 @@ public class BoardController {
             return "redirect:/boards/list";
         }
         List<Links> links = linksDao.findAllByBoardId(id);
+        List<RecipeEntity> recipes = recipyDao.findAllByBoardId(id);
         model.addAttribute("board", board);
         model.addAttribute("links", links);
+        model.addAttribute("recipes", recipes);
         return "board/boardLinks";
     }
 

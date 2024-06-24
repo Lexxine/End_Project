@@ -28,4 +28,5 @@ public class RecipeController {
 //        model.addAttribute("recipes", recipes);
         return "recipes2";
     }
+
 }

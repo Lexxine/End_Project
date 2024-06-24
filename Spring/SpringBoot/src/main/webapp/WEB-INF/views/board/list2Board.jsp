@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -95,6 +96,7 @@
             border-radius: 65%;
 
         }
+
         .recipe-info h5 {
             margin-top: 0;
             margin-bottom: 10px;
@@ -102,7 +104,7 @@
             text-align: center;
         }
 
-            .recipe-item:hover img {
+        .recipe-item:hover img {
             width: 40%; /* Redukcja szerokości obrazka */
             height: 40%; /* Redukcja wysokości obrazka */
             position: absolute;
@@ -121,6 +123,7 @@
             transform: translateY(100%);
             transition: transform 0.3s ease;
             text-align: center;
+            color: #5a5c69;
 
         }
 
@@ -132,6 +135,7 @@
             display: flex;
             justify-content: space-around;
             margin-top: 10px;
+            color: #5a5c69;
         }
 
         .nutrition-item {
@@ -155,6 +159,7 @@
             background-color: white;
             padding: 20px; /* Added padding for content spacing */
         }
+
         .recipe-name-overlay {
             position: absolute;
             top: 90%;
@@ -163,15 +168,38 @@
             width: 60%;
             text-align: center;
         }
-        .recipe-item:hover::before {
-            content: "\f004"; /* Kod ikony serduszka z Font Awesome */
-            font-family: "Font Awesome 6 Free"; /* Używana rodzina czcionek */
-            position: absolute; /* Pozycja absolutna w kontenerze rodzica */
-            top: 10px; /* Odległość od górnej krawędzi */
-            right: 10px; /* Odległość od prawej krawędzi */
-            font-size: 1.5rem; /* Rozmiar ikony */
-            color: #808080; /* Kolor ikony */
-            z-index: 1; /* Głębokość warstwy (nad tłem) */
+
+        /*.recipe-item:hover::before {*/
+        /*    content: "\f004";*/
+        /*    font-family: "Font Awesome 6 Free";*/
+        /*    position: absolute;*/
+        /*    top: 10px;*/
+        /*    right: 10px;*/
+        /*    font-size: 1.5rem;*/
+        /*    color: #808080;*/
+        /*    z-index: 1;*/
+        /*    cursor: pointer;*/
+        /*}*/
+        .recipe-item .heart-button {
+            position: absolute;
+            top: 1px;
+            right: 10px;
+            font-size: 1.5rem;
+            color: #808080;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .recipe-item .heart-icon {
+            font-size: inherit;
+        }
+        .recipe-link {
+            color: #5a5c69;
+        }
+        .modal{
+            display: none;
         }
 
     </style>
@@ -243,88 +271,125 @@
                 <!-- Recipe Section -->
                 <h1>Lista przepisów</h1>
                 <div class="recipes-container">
-<%--                <div id="recipes-container" class="d-flex flex-wrap"></div>--%>
-<%--&lt;%&ndash;                <button formaction="/boards/list" id="load-more" class="btn btn-primary">Load More</button>&ndash;%&gt;--%>
-<%--                <div class="d-flex flex-wrap ">--%>
+                    <%--                <div id="recipes-container" class="d-flex flex-wrap"></div>--%>
+                    <%--&lt;%&ndash;                <button formaction="/boards/list" id="load-more" class="btn btn-primary">Load More</button>&ndash;%&gt;--%>
+                    <%--                <div class="d-flex flex-wrap ">--%>
                     <c:forEach var="recipe" items="${recipes}">
                         <div class="recipe-item">
-                            <img src="${recipe.imageUrl}" alt="${recipe.name}">
-                            <div class="recipe-name-overlay">
-                                <h5>${recipe.name}</h5>
-                            </div>
-                            <div class="recipe-info">
-                                <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+                            <div id="saveModal" class="modal">
+                            <div class="modal-content">
+                                <span class="close"></span>
+                                <form id="saveRecipeForm" action="/recipes/saveRecipe" method="post" >
+                                    <input type="hidden" name="name" id="recipeName" value="${recipe.name}">
+                                    <input type="hidden" name="imageUrl" id="recipeImageUrl" value="${recipe.imageUrl}">
+                                    <input type="hidden" name="urlToRecipy" id="recipeUrl" value="${recipe.urlToRecipy}">
+                                    <input type="hidden" name="calories" id="recipeCalories" value="${recipe.calories}">
+                                    <input type="hidden" name="carbs" id="recipeCarbs" value="${recipe.carbs}">
+                                    <input type="hidden" name="protein" id="recipeProtein" value="${recipe.protein}">
+                                    <input type="hidden" name="fat" id="recipeFat" value="${recipe.fat}">
+                                    <label for="boardId">Wybierz tablicę:</label>
+                                    <select id="boardId" name="boardId" required>
+                                        <c:forEach var="board" items="${boards}">
+                                            <option value="${board.id}">${board.name}</option>
+                                        </c:forEach>
+                                    </select>
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                    <button type="submit" class="btn btn-primary">Zapisz</button>
+                                </form>
 
-                                <h5>${recipe.name}</h5>
-                                <p>Wartosć odżywcza na 1 porcję:</p>
-                                <div class="nutrition-info">
-                                    <div class="nutrition-item">
-                                        <span>${recipe.calories}</span>
-                                        <div class="nutrition-label">kcal</div>
-                                    </div>
-                                    <div class="nutrition-item">
-                                        <span>${recipe.carbs}</span>
-                                        <div class="nutrition-label">W</div>
-                                    </div>
-                                    <div class="nutrition-item">
-                                        <span>${recipe.protein}</span>
-                                        <div class="nutrition-label">B</div>
-                                    </div>
-                                    <div class="nutrition-item">
-                                        <span>${recipe.fat}</span>
-                                        <div class="nutrition-label">T</div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
+                            <button class="heart-button" style="display: none">
+                            <i class="heart-icon fas fa-heart"></i>
+
+                        </button>
+                            <img src="${recipe.imageUrl}" alt="${recipe.name}">
+                            <a href="${recipe.urlToRecipy}" target="_blank" class="recipe-link">
+                                <div class="recipe-name-overlay">
+                                    <h5>${recipe.name}</h5>
+
+                                </div>
+                                <div class="recipe-info">
+
+
+                                        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+                                                                 rel="stylesheet">
+
+                                    <h5>${recipe.name}</h5>
+
+                                    <p>Wartosć odżywcza na 1 porcję:</p>
+                                    <div class="nutrition-info">
+                                        <div class="nutrition-item">
+                                            <span>${recipe.calories}</span>
+                                            <div class="nutrition-label">kcal</div>
+                                        </div>
+                                        <div class="nutrition-item">
+                                            <span>${recipe.carbs}</span>
+                                            <div class="nutrition-label">W</div>
+                                        </div>
+                                        <div class="nutrition-item">
+                                            <span>${recipe.protein}</span>
+                                            <div class="nutrition-label">B</div>
+                                        </div>
+                                        <div class="nutrition-item">
+                                            <span>${recipe.fat}</span>
+                                            <div class="nutrition-label">T</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </a>
+                        </div>
+
                     </c:forEach>
                 </div>
+
+
+
                 <form id="nextPageForm" action="/boards/list" method="GET">
                     <input type="hidden" name="query" value="${query}"/>
                     <input type="hidden" name="nextLink" value="${nextLink}"/>
                     <button type="submit" class="btn btn-primary">Next Page</button>
                 </form>
 
-
-            <%--            </div>--%>
-<%--        </div>--%>
-    </div>
-</div>
-
-<!-- Scroll to Top Button-->
-<a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-</a>
-
-<!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="login.html">Logout</a>
             </div>
         </div>
-    </div>
-</div>
 
-<!-- Bootstrap core JavaScript-->
-<script src="<c:url value="/resources/vendor/jquery/jquery.min.js"/>"></script>
-<script src="<c:url value="/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
-<!-- Core plugin JavaScript-->
-<script src="<c:url value="/resources/vendor/jquery-easing/jquery.easing.min.js"/>"></script>
-<!-- Custom scripts for all pages-->
-<script src="<c:url value="/resources/js/sb-admin-2.min.js"/>"></script>
-<!-- Custom Scroll Script -->
-<script src="<c:url value="/resources/js/demo/board-scroll.js"/>"></script>
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+
+        <!-- Logout Modal-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-primary" href="login.html">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bootstrap core JavaScript-->
+        <script src="<c:url value="/resources/vendor/jquery/jquery.min.js"/>"></script>
+        <script src="<c:url value="/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
+        <!-- Core plugin JavaScript-->
+        <script src="<c:url value="/resources/vendor/jquery-easing/jquery.easing.min.js"/>"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="<c:url value="/resources/js/sb-admin-2.min.js"/>"></script>
+        <!-- Custom Scroll Script -->
+        <script src="<c:url value="/resources/js/demo/board-scroll.js"/>"></script>
+                <script src="<c:url value="/resources/js/demo/index2.js"/>"></script>
 
 </body>
 </html>

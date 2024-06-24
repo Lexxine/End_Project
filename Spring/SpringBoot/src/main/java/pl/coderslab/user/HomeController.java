@@ -32,7 +32,8 @@ public class HomeController {
             @RequestParam("paramName") String paramName,
             @RequestParam("paramTitle") String paramTitle,
             @RequestParam("paramDescription") String paramDescription,
-            @RequestParam("boardId") Long boardId) {
+            @RequestParam("boardId") Long boardId,
+            @RequestParam("thumbnailUrl") String thumbnailUrl) {
 
         Board board = boardRepository.findById(boardId).orElse(null);
 
@@ -40,6 +41,7 @@ public class HomeController {
         newLink.setUrl(paramName);
         newLink.setTitle(paramTitle);
         newLink.setDescription(paramDescription);
+        newLink.setThumbnailUrl(thumbnailUrl);
         newLink.setBoard(board);
 
         linksDao.save(newLink);

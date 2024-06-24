@@ -61,9 +61,28 @@ public class EdamamService {
             return Collections.emptyList();
         }
     }
+
     public String getNextLink() {
         return nextLink;
     }
+    public Recipe getRecipeById(String recipeId) {
+        String url = UriComponentsBuilder.fromHttpUrl(edamamBaseUrl)
+                .path("/api/recipes/v2/{id}")
+                .queryParam("type", "public")
+                .queryParam("app_id", appId)
+                .queryParam("app_key", appKey)
+                .buildAndExpand(recipeId)
+                .toUriString();
+
+        ResponseEntity<RecipeData> response = restTemplate.getForEntity(url, RecipeData.class);
+
+        if (response.getBody() != null) {
+            return mapToRecipe(response.getBody());
+        } else {
+            return null; // Handle error or return appropriate response
+        }
+    }
+
     private Recipe mapToRecipe(RecipeData recipeData) {
         Recipe recipe = new Recipe();
         recipe.setName(recipeData.getLabel());
@@ -76,6 +95,11 @@ public class EdamamService {
         recipe.setCarbs((int) Math.round(recipeData.getTotalNutrients().getCarbs().getQuantity() / servings));
         recipe.setProtein((int) Math.round(recipeData.getTotalNutrients().getProtein().getQuantity() / servings));
         recipe.setFat((int) Math.round(recipeData.getTotalNutrients().getFat().getQuantity() / servings));
+        recipe.setIngredients(recipeData.getIngredientLines());
+        recipe.setRecipyInstructions(recipeData.getInstructions());
+        recipe.setUrlToRecipy(recipeData.getUrl());
+        recipe.setGlycemicInd(recipeData.getGlycemicIndex());
+        recipe.setMeal(recipeData.getMealType());
         return recipe;
     }
 }

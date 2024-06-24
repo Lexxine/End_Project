@@ -22,6 +22,7 @@ public class Links {
     private String url;
     private String title;
     private String description;
+    private String thumbnailUrl;
 
     @ManyToOne
     @JoinColumn(name = "board_id")

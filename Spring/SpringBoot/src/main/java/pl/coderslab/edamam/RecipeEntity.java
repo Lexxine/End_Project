@@ -6,32 +6,28 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.coderslab.board.Board;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.List;
 
-
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Recipe {
-
+public class RecipeEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private String name;
     private String imageUrl;
-    private String source;
+    private String urlToRecipy;
     private int calories;
     private int carbs;
     private int protein;
     private int fat;
-    private List<String> ingredients;
-    private String recipyInstructions;
-    private String urlToRecipy;
-    private Double glycemicInd;
-    private List<String> meal;
 
     @ManyToOne
     @JoinColumn(name = "board_id")
     private Board board;
+
 }
