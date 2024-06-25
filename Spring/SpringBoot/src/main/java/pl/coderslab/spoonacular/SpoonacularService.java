@@ -17,18 +17,22 @@ public class SpoonacularService {
     private final RestTemplate restTemplate;
     private String spoonacularApiKey = "887ee384d47a43a895b78519ddc39043";
     private final String spoonacularBaseUrl = "https://api.spoonacular.com";
-    private final int DEFAULT_NUMBER = 35;
+    private final int DEFAULT_NUMBER = 32;
 
     public SpoonacularService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
 
     }
 
-    public List<Recipe> getRecipes() {
+    public List<Recipe> getRecipes(int page) {
+        int offset = page * DEFAULT_NUMBER;
+
         String url = UriComponentsBuilder.fromHttpUrl(spoonacularBaseUrl)
                 .path("/recipes/random")
                 .queryParam("apiKey", spoonacularApiKey)
                 .queryParam("number", DEFAULT_NUMBER)
+                .queryParam("offset", offset)
+                .queryParam("includeNutrition", true)
                 .toUriString();
 
         ResponseEntity<RecipesResponse> response = restTemplate.getForEntity(url, RecipesResponse.class);

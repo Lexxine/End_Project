@@ -14,4 +14,9 @@ public class Recipe {
     private String title;
     private String image;
     private String summary;
+    private String sourceUrl;
+    private Nutrition nutrition;
+    private int servings;
+
+
 }

@@ -4,17 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.coderslab.edamam.*;
 import pl.coderslab.recipes.Links;
 import pl.coderslab.recipes.LinksDao;
+import pl.coderslab.spoonacular.Recipe;
+import pl.coderslab.spoonacular.RecipeEntity;
+import pl.coderslab.spoonacular.RecipyDao;
 import pl.coderslab.spoonacular.SpoonacularService;
 import pl.coderslab.user.User;
 import pl.coderslab.user.UserService;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 import java.util.List;
 
@@ -30,10 +30,11 @@ public class BoardController {
     private LinksDao linksDao;
     @Autowired
     SpoonacularService spoonacularService;
+//    @Autowired
+//    EdamamService edamamService;
     @Autowired
-    EdamamService edamamService;
-    @Autowired
-    RecipyDao recipyDao;
+RecipyDao recipyDao;
+
 
     @GetMapping("/add")
     public String showAddBoardForm(Model model) {
@@ -57,25 +58,43 @@ public class BoardController {
     }
 
     @GetMapping("/list")
-    public String displayBoardsAndRecipes(@RequestParam(required = false, defaultValue = "healthy") String query,
-                                          @RequestParam(required = false) String nextLink, Model model,
-
-                                          Principal principal) throws IOException {
+    public String displayBoardsAndRecipes(Model model,
+                                          Principal principal,
+                                          HttpSession session,
+                                          @RequestParam(defaultValue = "0") int page) throws IOException {
         User user = getCurrentUser(principal);
         List<Board> boards = boardRepository.findAllByUserId(user.getId());
         model.addAttribute("boards", boards);
-        List<Recipe> recipes;
-        if (nextLink != null && !nextLink.isEmpty()) {
-            recipes = edamamService.getRecipesWithPagination(nextLink);
-        } else {
-            recipes = edamamService.getRecipesWithPagination(query);
-        }
-
+        List<Recipe> recipes = spoonacularService.getRecipes(page);
         model.addAttribute("recipes", recipes);
-        model.addAttribute("nextLink", edamamService.getNextLink());
-        model.addAttribute("query", query);
+        session.setAttribute("currentPage", page);
         return "board/list2Board";
     }
+
+
+//        @GetMapping("/recipes")
+//        public String getRecipes(@RequestParam(defaultValue = "chicken") String query,
+//                                 @RequestParam(defaultValue = "0") int from,
+//                                 @RequestParam(defaultValue = "10") int to,
+//                                 @RequestParam(required = false) String next,
+//                                 Model model) {
+//            RecipesResponse response;
+//            if (next != null && !next.isEmpty()) {
+//                // If 'next' parameter is provided, get the next page JSON
+//                response = edamamService.getNextPageJson(next);
+//    } else {
+//                // Get initial recipes based on query, from, and to parameters
+//              //  response = edamamService.getRecipes(query, from, to);
+//                response = edamamService.getNextPageJson("https://api.edamam.com/api/recipes/v2?q=chicken&app_key=44c5464c459b8dee2b426b86265ec4ce&_cont=CHcVQBtNNQphDmgVQntAEX4BYkt6DAEFSmxEBGEValxwDAUFUXlSBTYQalBwUgEHRjYRB2pCZFxyBgoHQjNIC2NCYFQlAQcVLnlSVSBMPkd5AANK&from=0&to=10&type=public&app_id=69c700ad");
+//            }
+//
+//            model.addAttribute("recipes", response.getHits());
+//            model.addAttribute("nextLink", response.get_links().getNext().getHref());
+//            model.addAttribute("query", query);
+//            model.addAttribute("from", from);
+//            model.addAttribute("to", to);
+//            return "recipes";
+//        }
 
 
     @PostMapping("/delete/{id}")

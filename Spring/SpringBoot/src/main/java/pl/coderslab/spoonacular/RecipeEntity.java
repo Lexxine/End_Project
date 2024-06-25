@@ -1,4 +1,4 @@
-package pl.coderslab.edamam;
+package pl.coderslab.spoonacular;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +7,6 @@ import lombok.Setter;
 import pl.coderslab.board.Board;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Getter

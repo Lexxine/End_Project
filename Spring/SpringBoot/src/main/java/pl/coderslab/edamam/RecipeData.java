@@ -16,12 +16,13 @@ public class RecipeData {
     private String label;
     private String image;
     private String source;
-    private Double yield;
-    private Double calories;
+    private String yield;
+    private String calories;
     private TotalNutrients totalNutrients;
     private List<String> ingredientLines;
     private String instructions;
     private String url;
     private Double glycemicIndex;
     private List<String> mealType;
+
 }

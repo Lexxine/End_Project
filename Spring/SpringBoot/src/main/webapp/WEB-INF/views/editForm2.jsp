@@ -4,13 +4,13 @@
 <h2>Edytuj przepis</h2>
 <form action="/recipes/edit/${recipe.id}" method="post">
     <label for="paramName">Nazwa przepisu:</label>
-    <input type="text" id="paramName" name="name" value="${recipe.name}" required><br>
+    <input type="text" id="paramName" name="title" value="${recipe.name}" required><br>
 
     <label for="imageUrl">URL do obrazka:</label>
-    <input type="text" id="imageUrl" name="imageUrl" value="${recipe.imageUrl}" required><br>
+    <input type="text" id="imageUrl" name="image" value="${recipe.imageUrl}" required><br>
 
     <label for="urlToRecipy">URL do przepisu:</label>
-    <input type="text" id="urlToRecipy" name="urlToRecipy" value="${recipe.urlToRecipy}" required><br>
+    <input type="text" id="urlToRecipy" name="sourceUrl" value="${recipe.urlToRecipy}" required><br>
 
     <label for="calories">Kalorie:</label>
     <input type="text" id="calories" name="calories" value="${recipe.calories}" required><br>

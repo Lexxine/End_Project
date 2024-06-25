@@ -1,4 +1,4 @@
-package pl.coderslab.edamam;
+package pl.coderslab.spoonacular;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -6,41 +6,28 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.board.Board;
 import pl.coderslab.board.BoardRepository;
-import pl.coderslab.recipes.Links;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 @Controller
 @RequestMapping("/recipes")
 public class RecipesController {
 
-    private final EdamamService edamamService;
+    private final SpoonacularService spoonacularService;
     private final RecipyDao recipyDao;
     @Autowired
     private BoardRepository boardRepository;
 
-    public RecipesController(EdamamService edamamService, RecipyDao recipyDao) {
-        this.edamamService = edamamService;
+    public RecipesController(SpoonacularService spoonacularService, RecipyDao recipyDao) {
+        this.spoonacularService = spoonacularService;
         this.recipyDao = recipyDao;
     }
 
-    @GetMapping("/{id}")
-    public String showRecipeDetails(@PathVariable String id, Model model) {
-        // Pobierz szczegółowe informacje o przepisie z serwisu EdamamService
-        Recipe recipe = edamamService.getRecipeById(id);
 
-        // Przekaz przepis do widoku
-        model.addAttribute("recipe", recipe);
-
-        return "board/recipeInfo"; // Nazwa widoku do wyświetlenia szczegółów przepisu
-    }
 
     @PostMapping("/saveRecipe")
     public String saveRecipy(
-            @RequestParam("name") String name,
-            @RequestParam("imageUrl") String imageUrl,
-            @RequestParam("urlToRecipy") String urlToRecipy,
+            @RequestParam("title") String name,
+            @RequestParam("image") String imageUrl,
+            @RequestParam("sourceUrl") String urlToRecipy,
             @RequestParam("calories") String calories,
             @RequestParam("carbs") String carbs,
             @RequestParam("protein") String protein,
@@ -82,9 +69,9 @@ public class RecipesController {
     @PostMapping("/edit/{id}")
     public String updateLink(
             @PathVariable("id") Long id,
-            @RequestParam("name") String name,
-            @RequestParam("imageUrl") String imageUrl,
-            @RequestParam("urlToRecipy") String urlToRecipy,
+            @RequestParam("title") String name,
+            @RequestParam("image") String imageUrl,
+            @RequestParam("sourceUrl") String urlToRecipy,
             @RequestParam("calories") String calories,
             @RequestParam("carbs") String carbs,
             @RequestParam("protein") String protein,

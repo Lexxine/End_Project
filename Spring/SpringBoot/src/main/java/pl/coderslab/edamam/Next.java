@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Next {
-    private String title;
+//    private String title;
     private String href;
 }
 
