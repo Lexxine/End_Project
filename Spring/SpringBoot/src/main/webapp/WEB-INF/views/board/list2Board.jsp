@@ -62,15 +62,13 @@
 
         /* Styles for the recipe section */
         .recipes-container {
-            max-width: 1500px; /* Maksymalna szerokość kontenera przepisów */
-            margin: 0 auto; /* Wyśrodkowanie kontenera na ekranie */
-            padding: 0 15px; /* Dodatkowe paddingi po bokach */
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around; /* Wycentrowanie elementów na ekranie */
+            max-width: 1500px;
+            padding: 0 0;
+            display: block;
+            flex-wrap: nowrap;
+            justify-content: left;
 
         }
-
         .recipe-item {
             position: relative;
             width: 300px;
@@ -168,19 +166,42 @@
             width: 60%;
             text-align: center;
         }
+        .sidebar {
+            width: 300px;
+            background-color: rgba(244, 244, 244, 0);
+            padding: 30px;
+            margin-right: 20px;
+            align-self: flex-start;
+            margin-left: 140px;
+            margin-top: 25px;
+        }
+        .sidebar button {
+            display: block;
+            background-color: transparent;
+            border: none;
+            padding: 10px 0;
+            text-align: left;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+            color: black;
+            transition: color 0.3s ease;
+            margin-top: 10px;
+        }
 
+        .sidebar button:hover {
+            color: #dfb1c7;
+        }
 
-        /*.recipe-item:hover::before {*/
-        /*    content: "\f004";*/
-        /*    font-family: "Font Awesome 6 Free";*/
-        /*    position: absolute;*/
-        /*    top: 10px;*/
-        /*    right: 10px;*/
-        /*    font-size: 1.5rem;*/
-        /*    color: #808080;*/
-        /*    z-index: 1;*/
-        /*    cursor: pointer;*/
-        /*}*/
+        .sidebar h4 {
+            text-align: left;
+            font-size: 20px;
+            color: black;
+        }
+
+        body {
+            font-family: serif;
+        }
         .recipe-item .heart-button {
             position: absolute;
             top: 1px;
@@ -275,11 +296,13 @@
                 <!-- Recipe Section -->
                 <h1>Lista przepisów</h1>
                 <div class="recipes-container">
+                    <div class="sidebar">
+                        <h4>Rodzaje przepisów</h4>
                     <form id="breakfast" action="/boards/fetchRecipes" method="post">
-                    <input type="hidden" name="query" value="breakfast">
-                    <button type="submit">Śniadania</button>
+                        <input type="hidden" name="query" value="breakfast">
+                        <button type="submit">Śniadania</button>
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                </form>
+                    </form>
                     <form id="mainCourse" action="/boards/fetchRecipes" method="post">
                         <input type="hidden" name="query" value="main course">
                         <button type="submit">Dania główne</button>
@@ -310,7 +333,8 @@
                         <button type="submit">Napoje</button>
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     </form>
-                <%--                <div id="recipes-container" class="d-flex flex-wrap"></div>--%>
+                    </div>
+                    <%--                <div id="recipes-container" class="d-flex flex-wrap"></div>--%>
                     <%--&lt;%&ndash;                <button formaction="/boards/list" id="load-more" class="btn btn-primary">Load More</button>&ndash;%&gt;--%>
                     <%--                <div class="d-flex flex-wrap ">--%>
                     <c:forEach var="recipe" items="${recipes}">

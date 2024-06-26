@@ -90,11 +90,6 @@ RecipyDao recipyDao;
         }
     }
 
-
-
-
-
-
     @PostMapping("/delete/{id}")
     public String deleteBoard(@PathVariable Long id, Principal principal) {
         User user = getCurrentUser(principal);

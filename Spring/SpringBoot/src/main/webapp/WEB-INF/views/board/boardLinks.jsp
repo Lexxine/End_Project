@@ -66,11 +66,11 @@
     </style>
 </head>
 
-<body id="page-top">
+<body >
 <div id="wrapper">
     <div id="content-wrapper" class="d-flex flex-column">
         <div id="content">
-            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"></nav>
+
             <div class="container-fluid">
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-800">Przepisy dla tablicy: ${board.name}</h1>
@@ -78,6 +78,7 @@
                 </div>
                 <div class="row mb-4">
                     <a href="/boards/edit/${board.id}" class="btn btn-sm btn-warning mr-2" style="background-color: #DBB9CC; color: white; border-color: #DBB9CC;">Edytuj tablicę</a>
+                    <a href="/boards/list" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Strona główna</a>
                     <form action="/boards/delete/${board.id}" method="post" style="display: inline;">
                         <input type="submit" class="btn btn-sm btn-danger" value="Usuń tablicę" style="background-color: #DBB9CC; color: white; border-color: #DBB9CC;" onclick="return confirm('Czy na pewno chcesz usunąć tę tablicę?');">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
