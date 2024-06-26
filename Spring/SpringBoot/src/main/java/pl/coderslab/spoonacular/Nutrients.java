@@ -13,6 +13,5 @@ import lombok.Setter;
 public class Nutrients {
 private String name;
 private int amount;
-private String unit;
 
 }

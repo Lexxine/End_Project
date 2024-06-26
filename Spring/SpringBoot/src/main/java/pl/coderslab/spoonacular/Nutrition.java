@@ -14,4 +14,5 @@ import java.util.List;
 @AllArgsConstructor
 public class Nutrition {
     private List<Nutrients> nutrients;
+
 }

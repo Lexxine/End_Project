@@ -275,11 +275,48 @@
                 <!-- Recipe Section -->
                 <h1>Lista przepisów</h1>
                 <div class="recipes-container">
-                    <%--                <div id="recipes-container" class="d-flex flex-wrap"></div>--%>
+                    <form id="breakfast" action="/boards/fetchRecipes" method="post">
+                    <input type="hidden" name="query" value="breakfast">
+                    <button type="submit">Śniadania</button>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                </form>
+                    <form id="mainCourse" action="/boards/fetchRecipes" method="post">
+                        <input type="hidden" name="query" value="main course">
+                        <button type="submit">Dania główne</button>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    </form>
+                    <form id="soup" action="/boards/fetchRecipes" method="post">
+                        <input type="hidden" name="query" value="soup">
+                        <button type="submit">Zupy</button>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    </form>
+                    <form id="salad" action="/boards/fetchRecipes" method="post">
+                        <input type="hidden" name="query" value="salad">
+                        <button type="submit">Sałatki</button>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    </form>
+                    <form id="dessert" action="/boards/fetchRecipes" method="post">
+                        <input type="hidden" name="query" value="dessert">
+                        <button type="submit">Desery</button>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    </form>
+                    <form id="snack" action="/boards/fetchRecipes" method="post">
+                        <input type="hidden" name="query" value="snack">
+                        <button type="submit">Przekąski</button>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    </form>
+                    <form id="beverage" action="/boards/fetchRecipes" method="post">
+                        <input type="hidden" name="query" value="beverage">
+                        <button type="submit">Napoje</button>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    </form>
+                <%--                <div id="recipes-container" class="d-flex flex-wrap"></div>--%>
                     <%--&lt;%&ndash;                <button formaction="/boards/list" id="load-more" class="btn btn-primary">Load More</button>&ndash;%&gt;--%>
                     <%--                <div class="d-flex flex-wrap ">--%>
                     <c:forEach var="recipe" items="${recipes}">
+
                         <div class="recipe-item">
+
                             <div id="saveModal" class="modal">
                                 <div class="modal-content">
                                     <span class="close"></span>
@@ -325,60 +362,60 @@
                             <img src="${recipe.image}" alt="${recipe.title}">
                             <a href="${recipe.sourceUrl}" target="_blank" class="recipe-link">
 
-                            <div class="recipe-name-overlay">
-                                <h5>${recipe.title}</h5>
+                                <div class="recipe-name-overlay">
+                                    <h5>${recipe.title}</h5>
 
-                            </div>
-                            <div class="recipe-info">
-
-
-                                <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-                                      rel="stylesheet">
-
-                                <h5>${recipe.title}</h5>
+                                </div>
+                                <div class="recipe-info">
 
 
-                                <p>Wartosć odżywcza na 1 porcję:</p>
-                                <div class="nutrition-info">
+                                    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+                                          rel="stylesheet">
+
+                                    <h5>${recipe.title}</h5>
+
+
+                                    <p>Wartosć odżywcza na 1 porcję:</p>
                                     <div class="nutrition-info">
+                                        <div class="nutrition-info">
 
-                                        <c:forEach var="nutrient" items="${recipe.nutrition.nutrients}">
-                                            <c:if test="${nutrient.name == 'Calories'}">
-                                                <div class="nutrition-item">
+                                            <c:forEach var="nutrient" items="${recipe.nutrition.nutrients}">
+                                                <c:if test="${nutrient.name == 'Calories'}">
+                                                    <div class="nutrition-item">
                                 <span>
                                     <c:out value="${Math.round(nutrient.amount / recipe.servings)}" />
                                 </span>
-                                                    <div class="nutrition-label">kcal</div>
-                                                </div>
-                                            </c:if>
-                                            <c:if test="${nutrient.name == 'Carbohydrates'}">
-                                                <div class="nutrition-item">
+                                                        <div class="nutrition-label">kcal</div>
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${nutrient.name == 'Carbohydrates'}">
+                                                    <div class="nutrition-item">
                                 <span>
                                     <c:out value="${Math.round(nutrient.amount / recipe.servings)}" />
                                 </span>
-                                                    <div class="nutrition-label">W</div>
-                                                </div>
-                                            </c:if>
-                                            <c:if test="${nutrient.name == 'Protein'}">
-                                                <div class="nutrition-item">
+                                                        <div class="nutrition-label">W</div>
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${nutrient.name == 'Protein'}">
+                                                    <div class="nutrition-item">
                                 <span>
                                     <c:out value="${Math.round(nutrient.amount / recipe.servings)}" />
                                 </span>
-                                                    <div class="nutrition-label">B</div>
-                                                </div>
-                                            </c:if>
-                                            <c:if test="${nutrient.name == 'Fat'}">
-                                                <div class="nutrition-item">
+                                                        <div class="nutrition-label">B</div>
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${nutrient.name == 'Fat'}">
+                                                    <div class="nutrition-item">
                                 <span>
                                     <c:out value="${Math.round(nutrient.amount / recipe.servings)}" />
                                 </span>
-                                                    <div class="nutrition-label">T</div>
-                                                </div>
-                                            </c:if>
-                                        </c:forEach>
+                                                        <div class="nutrition-label">T</div>
+                                                    </div>
+                                                </c:if>
+                                            </c:forEach>
+                                        </div>
                                     </div>
-                            </div>
-                            </div>
+                                </div>
 
                             </a>
                         </div>
@@ -411,11 +448,12 @@
 
 
 
-            <%--                <form id="nextPageForm" action="/boards/list" method="GET">--%>
+                <%--                <form id="nextPageForm" action="/boards/list" method="GET">--%>
                 <%--                    <input type="hidden" name="query" value="${query}"/>--%>
                 <%--                    <input type="hidden" name="nextLink" value="${nextLink}"/>--%>
                 <%--                    <button type="submit" class="btn btn-primary">Next Page</button>--%>
                 <%--                </form>--%>
+
 
             </div>
         </div>

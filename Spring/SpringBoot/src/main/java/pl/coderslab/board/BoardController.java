@@ -1,6 +1,9 @@
 package pl.coderslab.board;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +19,9 @@ import pl.coderslab.user.UserService;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/boards")
@@ -70,31 +75,24 @@ RecipyDao recipyDao;
         session.setAttribute("currentPage", page);
         return "board/list2Board";
     }
+    @PostMapping("/fetchRecipes")
+    public String fetchRecipes(Model model, Principal principal, @RequestParam("query") String query, @RequestParam(defaultValue = "0") int page) {
+        try {
+            User user = getCurrentUser(principal);
+            List<Board> boards = boardRepository.findAllByUserId(user.getId());
+            model.addAttribute("boards", boards);
+            List<Recipe> recipes = spoonacularService.getRecipesByCategory(page, query);
+            model.addAttribute("recipes", recipes);
+            return "recipes";
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "error";
+        }
+    }
 
 
-//        @GetMapping("/recipes")
-//        public String getRecipes(@RequestParam(defaultValue = "chicken") String query,
-//                                 @RequestParam(defaultValue = "0") int from,
-//                                 @RequestParam(defaultValue = "10") int to,
-//                                 @RequestParam(required = false) String next,
-//                                 Model model) {
-//            RecipesResponse response;
-//            if (next != null && !next.isEmpty()) {
-//                // If 'next' parameter is provided, get the next page JSON
-//                response = edamamService.getNextPageJson(next);
-//    } else {
-//                // Get initial recipes based on query, from, and to parameters
-//              //  response = edamamService.getRecipes(query, from, to);
-//                response = edamamService.getNextPageJson("https://api.edamam.com/api/recipes/v2?q=chicken&app_key=44c5464c459b8dee2b426b86265ec4ce&_cont=CHcVQBtNNQphDmgVQntAEX4BYkt6DAEFSmxEBGEValxwDAUFUXlSBTYQalBwUgEHRjYRB2pCZFxyBgoHQjNIC2NCYFQlAQcVLnlSVSBMPkd5AANK&from=0&to=10&type=public&app_id=69c700ad");
-//            }
-//
-//            model.addAttribute("recipes", response.getHits());
-//            model.addAttribute("nextLink", response.get_links().getNext().getHref());
-//            model.addAttribute("query", query);
-//            model.addAttribute("from", from);
-//            model.addAttribute("to", to);
-//            return "recipes";
-//        }
+
+
 
 
     @PostMapping("/delete/{id}")
