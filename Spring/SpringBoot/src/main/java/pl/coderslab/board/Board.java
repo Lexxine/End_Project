@@ -6,9 +6,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import pl.coderslab.recipes.Links;
+import pl.coderslab.spoonacular.RecipeEntity;
 import pl.coderslab.user.User;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -27,6 +29,8 @@ public class Board {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "board")
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Links> links;
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RecipeEntity> recipes;
 }

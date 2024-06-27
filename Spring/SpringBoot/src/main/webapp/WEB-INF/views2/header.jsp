@@ -17,11 +17,13 @@
             border-radius: 10px;
             background-color: #f9f9f9;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
         }
 
         .form-container {
             display: flex;
             flex-direction: column;
+
         }
 
         .form-group {
@@ -57,11 +59,15 @@
             margin-top: 200px;
         }
         #Main {
-            margin-top: 20px;
-            margin-left: 20px;
+            margin-top: 40px;
+            margin-left: 40px;
             text-align: center;
-            background-color: #dfb1c7;
-            border-color: #dfb1c7;
+            background-color: rgba(219, 185, 204, 0.89);
+            border-color: rgba(219, 185, 204, 0.75);
+            margin-bottom: 30px;
+            border-radius: 30px;
+            padding: 10px 25px;
+            font-size: 18px;
         }
     </style>
 
