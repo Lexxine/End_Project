@@ -178,11 +178,11 @@
                                     <div class="row mt-3">
                                         <div class="col text-center">
                                             <a href="/user/edit/${link.id}" class="btn btn-sm edit-btn mr-2"
-                                               style="background-color: #DBB9CC; color: white; display: none;">Edytuj</a>
+                                               style="background-color: #DBB9CC; color: white; display: none;  border-radius: 20px;">Edytuj</a>
                                             <form action="/user/delete/${link.id}" method="post"
                                                   style="display: none;">
                                                 <input type="submit" class="btn btn-sm delete-btn"
-                                                       style="background-color: #DBB9CC; color: white;" value="Usuń"
+                                                       style="background-color: #DBB9CC; color: white; border-radius: 20px;" value="Usuń"
                                                        onclick="return confirm('Czy na pewno chcesz usunąć ten link?');">
                                                 <input type="hidden" name="${_csrf.parameterName}"
                                                        value="${_csrf.token}"/>
@@ -239,11 +239,11 @@
                                     <div class="row mt-3">
                                         <div class="col text-center">
                                             <a href="/recipes/edit/${recipe.id}" class="btn btn-sm edit-btn mr-2"
-                                               style="background-color: #DBB9CC; color: white; display: none;">Edytuj</a>
+                                               style="background-color: #DBB9CC; color: white; display: none; border-radius: 20px;">Edytuj</a>
                                             <form action="/recipes/delete/${recipe.id}" method="post"
                                                   style="display: none;">
                                                 <input type="submit" class="btn btn-sm delete-btn"
-                                                       style="background-color: #DBB9CC; color: white;" value="Usuń"
+                                                       style="background-color: #DBB9CC; color: white; border-radius: 20px;" value="Usuń"
                                                        onclick="return confirm('Czy na pewno chcesz usunąć ten przepis?');">
                                                 <input type="hidden" name="${_csrf.parameterName}"
                                                        value="${_csrf.token}"/>

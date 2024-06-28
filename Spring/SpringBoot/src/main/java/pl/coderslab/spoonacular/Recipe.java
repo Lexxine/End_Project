@@ -17,6 +17,9 @@ public class Recipe {
     private String sourceUrl;
     private Nutrition nutrition;
     private int servings;
+    int amount;
+//    private int readyInMinutes;
+
 
 
 }

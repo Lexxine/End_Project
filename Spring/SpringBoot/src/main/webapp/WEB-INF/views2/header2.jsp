@@ -32,6 +32,7 @@
             padding: 20px;
         }
         .content-container {
+            margin-top: 30px;
             background-color: rgba(255, 255, 255, 0.8);
             border-radius: 10px;
             padding: 20px;
@@ -99,6 +100,9 @@
         .error{
             font-size: 18px;
         }
+        body{
+            font-family: serif;
+        }
     </style>
 </head>
 
@@ -118,7 +122,7 @@
         <div class="container-fluid text-center">
 
             <!-- Page Heading -->
-            <h1 class="h3 mb-0 text-gray-800">Zaloguj się</h1>
+            <h1 class="h3 mb-0 text-gray-800" style="font-size: 40px">Zaloguj się</h1>
 
             <!-- Your content here -->
             <div class="content-container" id="login-form">
@@ -126,7 +130,7 @@
                 <form method="post">
                     <div><label> Nazwa użytkownika : <input type="text" name="username"/> </label></div>
                     <div><label> Hasło: <input type="password" name="password"/> </label></div>
-                    <div><input type="submit" value="Zaloguj się" class="styled-button"/></div>
+                    <div><input type="submit" value="Zaloguj się" class="styled-button" style=" border-radius: 30px;"/></div>
                     <div><span class="error">${error}</span></div>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </form>

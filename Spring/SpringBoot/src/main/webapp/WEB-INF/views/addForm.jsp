@@ -19,7 +19,7 @@
         </div>
 
         <div class="form-group">
-            <label for="thumbnailUrl">Thumbnail URL:</label>
+            <label for="thumbnailUrl">URL zdjęcia przepisu:</label>
             <input type="text" id="thumbnailUrl" name="thumbnailUrl" class="form-control">
         </div>
 
@@ -33,7 +33,7 @@
         </div>
 
         <div class="form-group text-center">
-            <button type="submit" class="btn btn-primary" style="background-color:#DFB1C7FF;border: 2px solid #DFB1C7FF;">Dodaj</button>
+            <button type="submit" class="btn btn-primary" style="background-color:#DFB1C7FF;border: 2px solid #DFB1C7FF;border-radius: 30px">Dodaj</button>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </div>
     </form>

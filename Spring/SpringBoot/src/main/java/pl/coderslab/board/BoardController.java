@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.recipes.Links;
 import pl.coderslab.recipes.LinksDao;
+import pl.coderslab.recipes.RecipesResponse;
 import pl.coderslab.spoonacular.Recipe;
 import pl.coderslab.spoonacular.RecipeEntity;
 import pl.coderslab.spoonacular.RecipyDao;
@@ -82,6 +83,20 @@ RecipyDao recipyDao;
             List<Board> boards = boardRepository.findAllByUserId(user.getId());
             model.addAttribute("boards", boards);
             List<Recipe> recipes = spoonacularService.getRecipesByCategory(page, query);
+            model.addAttribute("recipes", recipes);
+            return "recipes";
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "error";
+        }
+    }
+    @PostMapping("/fetchRecipesWithFilters")
+    public String exclude(Model model, Principal principal, @RequestParam("query") String query, @RequestParam(defaultValue = "0") int page) {
+        try {
+            User user = getCurrentUser(principal);
+            List<Board> boards = boardRepository.findAllByUserId(user.getId());
+            model.addAttribute("boards", boards);
+            List<Recipe> recipes = spoonacularService.exclude(page, query);
             model.addAttribute("recipes", recipes);
             return "recipes";
         } catch (IOException e) {

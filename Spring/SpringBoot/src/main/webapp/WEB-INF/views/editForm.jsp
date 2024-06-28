@@ -29,7 +29,7 @@
         </div>
 
         <div class="form-group text-center">
-            <button type="submit" class="btn btn-primary" style="background-color:#DFB1C7FF;border: #DFB1C7FF">Zaktualizuj</button>
+            <button type="submit" class="btn btn-primary" style="background-color:#DFB1C7FF;border: #DFB1C7FF; border-radius: 30px">Zaktualizuj</button>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </div>
     </form>

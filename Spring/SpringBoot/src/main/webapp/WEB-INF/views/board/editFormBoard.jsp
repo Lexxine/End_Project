@@ -13,7 +13,7 @@
             <form:textarea path="description" class="form-control"/>
         </div>
         <div class="form-group text-center">
-            <button type="submit" class="btn btn-primary" style="background-color:#DFB1C7FF;border: #DFB1C7FF">Zapisz</button>
+            <button type="submit" class="btn btn-primary" style="background-color:#DFB1C7FF;border: #DFB1C7FF;border-radius: 30px">Zapisz</button>
         </div>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     </form:form>

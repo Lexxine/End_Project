@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     const tiles = document.querySelectorAll(".recipe-item");
 
+
     tiles.forEach(function (tile) {
         const heartButtons = tile.querySelectorAll(".heart-button");
         const modalForm = tile.querySelector(".modal");

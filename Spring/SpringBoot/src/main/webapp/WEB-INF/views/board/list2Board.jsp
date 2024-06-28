@@ -92,6 +92,7 @@
             border-radius: 50%; /* Ensure the image is a perfect circle */
         }
 
+
         .recipe-info h5 {
             margin-top: 0;
             margin-bottom: 10px;
@@ -222,6 +223,92 @@
 
         .modal {
             display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 250px;
+            height: 250px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content2 {
+            background-color: transparent;
+            margin-top: 10px;
+            padding: 20px;
+            /*border: 1px solid #888;*/
+            width: 80%;
+            width: 300px; /* Maksymalna szerokość modala */
+            border-radius: 10px; /* Zaokrąglone rogi */
+            position: relative;
+            margin-left: 100px;
+        }
+        .modal-content2 select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            border: 1px solid #dfb1c7;
+            border-radius: 4px;
+            box-sizing: border-box;
+
+        }
+
+        /* Stylizacja przycisku zapisz */
+        .modal-content2 button {
+            background-color: #dfb1c7;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            align-self: center;
+        }
+
+        .modal-content2 button:hover {
+            background-color: #c290a5;
+        }
+        /* Stylizacja selecta */
+        .modal-content select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        /* Stylizacja przycisku zapisz */
+        .modal-content button {
+            background-color: #dfb1c7;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .modal-content button:hover {
+            background-color: #c290a5;
         }
 
         .pagination {
@@ -245,16 +332,32 @@
             max-width: 1500px;
             padding: 20px;
             background-color: white;
-            align-self: center;
+            flex-direction: column;
+            gap: 15px;
+            justify-content: center;
+
         }
 
         .content-container {
             display: flex;
-            justify-content: flex-start;
+            justify-content: center;
         }
 
         .container h1 {
             text-align: center;
+
+        }
+
+        #Main2 {
+
+            margin-left: 40px;
+            text-align: center;
+            background-color: rgba(219, 185, 204, 0.89);
+            border-color: rgba(219, 185, 204, 0.75);
+            margin-bottom: 10px;
+            border-radius: 30px;
+            padding: 10px 15px;
+            font-size: 15px;
         }
     </style>
 
@@ -276,10 +379,11 @@
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-800">Tablice</h1>
                     <div class="d-flex flex-column">
-                        <a href="/boards/add" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm mb-2"
+                        <a href="/boards/add" id="Main2"
+                           class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm mb-2"
                            style="margin-top: 20px;">Dodaj tablicę</a>
 
-                        <a href="/login" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Wyloguj</a>
+                        <a href="/login" id="Main2" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm ">Wyloguj</a>
                     </div>
                 </div>
 
@@ -297,7 +401,8 @@
                                                 <a href="/boards/${board.id}/links"
                                                    class="text-xs font-weight-bold text-primary text-uppercase mb-1"
                                                    style="color: #DBB9CC;font-size: 18px">${board.name}</a>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 15px">${board.description}</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800"
+                                                     style="font-size: 15px">${board.description}</div>
                                             </div>
                                         </div>
                                         <div class="row mt-3">
@@ -326,6 +431,25 @@
                 <!-- Recipe Section -->
                 <div class="container">
                     <h1>Lista przepisów</h1>
+                    <div class="modal-content2">
+                        <form id="filters" action="/boards/fetchRecipesWithFilters" method="post">
+                            <label for="selectElement">Alergeny:</label>
+                            <select name="query" id="selectElement"> multiple>
+                                <option  value="dairy">Mleko</option>
+                                <option value="egg">Jajka</option>
+                                <option  value="gluten">Gluten</option>
+                                <option   value="grain">Ziarna</option>
+                                <option  value="peanut">Orzeszki ziemne</option>
+                                <option  value="seafood">Owoce morza</option>
+                                <option  value="sesame">Sezam</option>
+                                <option  value="shellfish">Skorupiaki</option>
+                                <option  value="soy">Soja</option>
+                            </select>
+
+                            <button type="submit">Szukaj</button>
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        </form>
+                    </div>
                     <div class="content-container">
                         <div class="sidebar">
                             <h4>Rodzaje przepisów</h4>
@@ -364,6 +488,17 @@
                                 <button type="submit">Napoje</button>
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             </form>
+                            <h4>Kat. dodatkowe</h4>
+                            <form id="vegetarian" action="/boards/fetchRecipes" method="post">
+                                <input type="hidden" name="query" value="vegetarian">
+                                <button type="submit">Wegetariańskie</button>
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            </form>
+                            <form id="vegan" action="/boards/fetchRecipes" method="post">
+                                <input type="hidden" name="query" value="vegan">
+                                <button type="submit">Vege</button>
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            </form>
                         </div>
 
                         <div class="recipes-container">
@@ -376,7 +511,14 @@
                                                 <input type="hidden" name="title" id="recipeName"
                                                        value="${recipe.title}">
                                                 <input type="hidden" name="image" id="recipeImageUrl"
-                                                       value="${recipe.image}">
+                                                        <c:choose>
+                                                       <c:when test="${not empty recipe.image}">
+                                                       value="${recipe.image}"
+                                                </c:when>
+                                                <c:otherwise>
+                                                    value="/resources/img/iStock-1166149111.jpg">
+                                                </c:otherwise>
+                                                </c:choose>
                                                 <input type="hidden" name="sourceUrl" id="recipeUrl"
                                                        value="${recipe.sourceUrl}">
                                                 <c:forEach var="nutrient" items="${recipe.nutrition.nutrients}">
@@ -405,14 +547,24 @@
                                                 </select>
                                                 <input type="hidden" name="${_csrf.parameterName}"
                                                        value="${_csrf.token}"/>
-                                                <button type="submit" class="btn btn-primary">Zapisz</button>
+                                                <button type="submit" class="btn btn-primary"
+                                                        style="border-radius: 20px">Zapisz
+                                                </button>
                                             </form>
                                         </div>
                                     </div>
                                     <button class="heart-button" style="display: none">
                                         <i class="heart-icon fas fa-heart"></i>
                                     </button>
-                                    <img src="${recipe.image}" alt="${recipe.title}">
+                                    <c:choose>
+                                    <c:when test="${not empty recipe.image}">
+                                    <img src="${recipe.image}">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <img src="/resources/img/iStock-1166149111.jpg">
+<%--                                        <i class="fas fa-utensils fa-2x text-gray-300" style="width: 60%; height: 60%; position: absolute; top: 5%; left: 50%; transform: translateX(-50%); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 3em; color: gray;"></i>--%>
+                                    </c:otherwise>
+                                    </c:choose>
                                     <a href="${recipe.sourceUrl}" target="_blank" class="recipe-link">
                                         <div class="recipe-name-overlay">
                                             <h5>${recipe.title}</h5>
