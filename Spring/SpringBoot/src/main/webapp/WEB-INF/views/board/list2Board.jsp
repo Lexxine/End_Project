@@ -33,13 +33,14 @@
         }
 
         .board-container {
-            display: block;
-            overflow: hidden;
             position: relative;
+            width: 100%;
+            overflow: hidden;
         }
 
         .board-wrapper {
             display: flex;
+            overflow-x: scroll;
             transition: transform 0.5s ease;
         }
 
@@ -60,54 +61,52 @@
             right: 0;
         }
 
-        /* Styles for the recipe section */
         .recipes-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px; /* Increase the gap between items */
+            gap: 20px;
         }
 
         .recipe-item {
             position: relative;
-            width: 260px; /* Reduced width */
-            height: 270px; /* Reduced height */
+            width: 260px;
+            height: 270px;
             overflow: hidden;
             border-radius: 10px;
             flex: 0 0 auto;
-            margin-bottom: 20px; /* Increase the gap between rows */
+            margin-bottom: 20px;
 
         }
 
         .recipe-item:hover {
-            background-color: white; /* White background on hover */
-            border: 1px solid #ccc; /* Gray border color on hover */
+            background-color: white;
+            border: 1px solid #ccc;
         }
 
         .recipe-item img {
-            width: 60%; /* Reduced width */
-            height: 60%; /* Reduced height */
+            width: 60%;
+            height: 60%;
             position: absolute;
-            top: 5%; /* Set distance from the top */
+            top: 5%;
             left: 50%;
             transform: translateX(-50%);
-            border-radius: 50%; /* Ensure the image is a perfect circle */
+            border-radius: 50%;
         }
-
 
         .recipe-info h5 {
             margin-top: 0;
             margin-bottom: 10px;
             font-size: 18px
-            /*text-align: center;*/
+
         }
 
         .recipe-item:hover img {
-            width: 35%; /* Further reduced width on hover */
-            height: 35%; /* Further reduced height on hover */
-            top: 5%; /* Set distance from the top */
+            width: 35%;
+            height: 35%;
+            top: 5%;
             left: 50%;
             transform: translateX(-50%);
-            border-radius: 50%; /* Ensure the image is a perfect circle on hover */
+            border-radius: 50%;
         }
 
         .recipe-info {
@@ -153,7 +152,7 @@
 
         .container-fluid {
             background-color: white;
-            padding: 20px; /* Added padding for content spacing */
+            padding: 20px;
         }
 
         .recipe-name-overlay {
@@ -248,17 +247,18 @@
             align-items: center;
             justify-content: center;
         }
+
         .modal-content2 {
             background-color: transparent;
             margin-top: 10px;
             padding: 20px;
-            /*border: 1px solid #888;*/
             width: 80%;
-            width: 300px; /* Maksymalna szerokość modala */
-            border-radius: 10px; /* Zaokrąglone rogi */
+            width: 300px;
+            border-radius: 10px;
             position: relative;
             margin-left: 100px;
         }
+
         .modal-content2 select {
             width: 100%;
             padding: 10px;
@@ -271,7 +271,6 @@
 
         }
 
-        /* Stylizacja przycisku zapisz */
         .modal-content2 button {
             background-color: #dfb1c7;
             color: white;
@@ -286,7 +285,7 @@
         .modal-content2 button:hover {
             background-color: #c290a5;
         }
-        /* Stylizacja selecta */
+
         .modal-content select {
             width: 100%;
             padding: 10px;
@@ -298,7 +297,6 @@
             box-sizing: border-box;
         }
 
-        /* Stylizacja przycisku zapisz */
         .modal-content button {
             background-color: #dfb1c7;
             color: white;
@@ -391,7 +389,7 @@
 
                 <!-- Content Section -->
                 <div class="board-container">
-                    <button id="scrollLeft" class="nav-arrow"><i class="fas fa-chevron-left"></i></button>
+                    <button id="scrollLeft" class="nav-arrow" style="display: none"><i class="fas fa-chevron-left"></i></button>
                     <div class="board-wrapper" id="boardWrapper">
                         <c:forEach var="board" items="${boards}" varStatus="status">
                             <div class="col-xl-3 col-md-6 mb-4 board-item ${status.index < 3 ? 'visible' : ''}">
@@ -426,9 +424,8 @@
                             </div>
                         </c:forEach>
                     </div>
-                    <button id="scrollRight" class="nav-arrow"><i class="fas fa-chevron-right"></i></button>
+                    <button id="scrollRight" class="nav-arrow" style="display: none"><i class="fas fa-chevron-right"></i></button>
                 </div>
-
 
                 <!-- Recipe Section -->
                 <div class="container">
@@ -437,15 +434,15 @@
                         <form id="filters" action="/boards/fetchRecipesWithFilters" method="post">
                             <label for="selectElement">Alergeny:</label>
                             <select name="query" id="selectElement"> multiple>
-                                <option  value="dairy">Mleko</option>
+                                <option value="dairy">Mleko</option>
                                 <option value="egg">Jajka</option>
-                                <option  value="gluten">Gluten</option>
-                                <option   value="grain">Ziarna</option>
-                                <option  value="peanut">Orzeszki ziemne</option>
-                                <option  value="seafood">Owoce morza</option>
-                                <option  value="sesame">Sezam</option>
-                                <option  value="shellfish">Skorupiaki</option>
-                                <option  value="soy">Soja</option>
+                                <option value="gluten">Gluten</option>
+                                <option value="grain">Ziarna</option>
+                                <option value="peanut">Orzeszki ziemne</option>
+                                <option value="seafood">Owoce morza</option>
+                                <option value="sesame">Sezam</option>
+                                <option value="shellfish">Skorupiaki</option>
+                                <option value="soy">Soja</option>
                             </select>
 
                             <button type="submit">Szukaj</button>
@@ -513,12 +510,12 @@
                                                 <input type="hidden" name="title" id="recipeName"
                                                        value="${recipe.title}">
                                                 <input type="hidden" name="image" id="recipeImageUrl"
-                                                        <c:choose>
-                                                       <c:when test="${not empty recipe.image}">
+                                                <c:choose>
+                                                <c:when test="${not empty recipe.image}">
                                                        value="${recipe.image}"
                                                 </c:when>
                                                 <c:otherwise>
-                                                    value="/resources/img/iStock-1166149111.jpg"
+                                                       value="/resources/img/iStock-1166149111.jpg"
                                                 </c:otherwise>
                                                 </c:choose>>
                                                 <input type="hidden" name="sourceUrl" id="recipeUrl"
@@ -559,13 +556,12 @@
                                         <i class="heart-icon fas fa-heart"></i>
                                     </button>
                                     <c:choose>
-                                    <c:when test="${not empty recipe.image}">
-                                    <img src="${recipe.image}">
-                                    </c:when>
-                                    <c:otherwise>
-                                        <img src="/resources/img/iStock-1166149111.jpg">
-<%--                                        <i class="fas fa-utensils fa-2x text-gray-300" style="width: 60%; height: 60%; position: absolute; top: 5%; left: 50%; transform: translateX(-50%); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 3em; color: gray;"></i>--%>
-                                    </c:otherwise>
+                                        <c:when test="${not empty recipe.image}">
+                                            <img src="${recipe.image}">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <img src="/resources/img/iStock-1166149111.jpg">
+                                        </c:otherwise>
                                     </c:choose>
                                     <a href="${recipe.sourceUrl}" target="_blank" class="recipe-link">
                                         <div class="recipe-name-overlay">
@@ -621,16 +617,14 @@
                         </div>
                     </div>
                     <div class="pagination">
-                    <c:if test="${currentPage > 0}">
-                        <a href="${pageContext.request.contextPath}/boards/list?page=${currentPage - 1}"> Poprzednia   </a>
-                    </c:if>
-                    <span> Strona: ${currentPage}</span>
-                    <a href="${pageContext.request.contextPath}/boards/list?page=${currentPage + 1}">   Następna </a>
+                        <c:if test="${currentPage > 0}">
+                            <a href="${pageContext.request.contextPath}/boards/list?page=${currentPage - 1}">
+                                Poprzednia </a>
+                        </c:if>
+                        <span> Strona: ${currentPage}</span>
+                        <a href="${pageContext.request.contextPath}/boards/list?page=${currentPage + 1}"> Następna </a>
+                    </div>
                 </div>
-                </div>
-
-
-
             </div>
         </div>
 
@@ -658,7 +652,6 @@
                 </div>
             </div>
         </div>
-
         <!-- Bootstrap core JavaScript-->
         <script src="<c:url value="/resources/vendor/jquery/jquery.min.js"/>"></script>
         <script src="<c:url value="/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"/>"></script>

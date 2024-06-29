@@ -8,18 +8,14 @@
 <html lang="en">
 
 <head>
-
-
-
     <style>
         .modal-content2 {
             background-color: #fefefe;
             margin-top: 10px;
             padding: 20px;
-            /*border: 1px solid #888;*/
             width: 80%;
-            width: 1000px; /* Maksymalna szerokość modala */
-            border-radius: 10px; /* Zaokrąglone rogi */
+            width: 1000px;
+            border-radius: 10px;
             position: relative;
             margin-left: 150px;
 
@@ -36,7 +32,6 @@
             display: none;
         }
 
-        /* Stylizacja przycisku zapisz */
         .modal-content2 button {
             background-color: #dfb1c7;
             color: white;

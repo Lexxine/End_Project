@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.recipes.Links;
 import pl.coderslab.recipes.LinksDao;
-import pl.coderslab.recipes.RecipesResponse;
 import pl.coderslab.spoonacular.Recipe;
 import pl.coderslab.spoonacular.RecipeEntity;
 import pl.coderslab.spoonacular.RecipyDao;
@@ -17,9 +16,7 @@ import pl.coderslab.user.UserService;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.security.Principal;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/boards")
@@ -33,10 +30,9 @@ public class BoardController {
     private LinksDao linksDao;
     @Autowired
     SpoonacularService spoonacularService;
-//    @Autowired
-//    EdamamService edamamService;
+
     @Autowired
-RecipyDao recipyDao;
+    RecipyDao recipyDao;
 
 
     @GetMapping("/add")
@@ -74,8 +70,9 @@ RecipyDao recipyDao;
         model.addAttribute("currentPage", page);
         return "board/list2Board";
     }
+
     @PostMapping("/fetchRecipes")
-    public String fetchRecipes(Model model, Principal principal,HttpSession session,@RequestParam("query") String query, @RequestParam(defaultValue = "0") int page) {
+    public String fetchRecipes(Model model, Principal principal, HttpSession session, @RequestParam("query") String query, @RequestParam(defaultValue = "0") int page) {
 
         try {
             if (query != null) {
@@ -97,8 +94,9 @@ RecipyDao recipyDao;
             return "error";
         }
     }
+
     @PostMapping("/fetchRecipesWithFilters")
-    public String exclude(Model model, Principal principal,HttpSession session, @RequestParam("query") String query, @RequestParam(defaultValue = "0") int page) {
+    public String exclude(Model model, Principal principal, HttpSession session, @RequestParam("query") String query, @RequestParam(defaultValue = "0") int page) {
         try {
             if (query != null) {
                 session.setAttribute("query", query);
@@ -174,6 +172,4 @@ RecipyDao recipyDao;
         model.addAttribute("recipes", recipes);
         return "board/boardLinks";
     }
-
-
 }

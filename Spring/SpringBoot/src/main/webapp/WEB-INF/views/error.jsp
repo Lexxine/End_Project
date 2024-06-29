@@ -21,9 +21,9 @@
         .error-container {
 
             display: flex;
-            flex-direction: column; /* Ustawia kontener w kolumnie */
-            align-items: center; /* Centruje elementy w pionie */
-            text-align: center; /* Opcjonalnie, aby centrować tekst */
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
             color: #ffffff;
         }
 

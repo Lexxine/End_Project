@@ -18,8 +18,4 @@ public class Recipe {
     private Nutrition nutrition;
     private int servings;
     int amount;
-//    private int readyInMinutes;
-
-
-
 }

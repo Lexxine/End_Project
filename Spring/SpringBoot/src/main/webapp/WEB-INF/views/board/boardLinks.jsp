@@ -29,6 +29,7 @@
             position: relative;
             overflow: hidden;
         }
+
         .card-body img {
             border-radius: 50%;
             width: 100px;
@@ -38,6 +39,7 @@
             display: block;
             top: 50%;
         }
+
         .edit-btn,
         .delete-btn {
             display: none;
@@ -113,11 +115,12 @@
             margin-left: 40px;
             border-radius: 30px;
             margin-top: 50px;
-            background-color: transparent; /* Usunięcie koloru tła */
-            border-color: transparent; /* Usunięcie koloru obramowania */
+            background-color: transparent;
+            border-color: transparent;
             color: rgb(196, 156, 182);
             font-size: 20px;
         }
+
         .container-fluid {
             width: 70%;
         }
@@ -132,14 +135,14 @@
             <a href="/boards/list" id="Main" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Strona
                 główna</a>
             <a href="/user/add" class="AddButton">Dodaj</a>
-                <a href="/boards/edit/${board.id}" class=" AddButton">Edytuj tablicę</a>
+            <a href="/boards/edit/${board.id}" class=" AddButton">Edytuj tablicę</a>
 
-                <form action="/boards/delete/${board.id}" method="post" style="display: inline;">
-                    <input type="submit" class="AddButton"
-                           value="Usuń tablicę"
-                           onclick="return confirm('Czy na pewno chcesz usunąć tę tablicę?');">
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                </form>
+            <form action="/boards/delete/${board.id}" method="post" style="display: inline;">
+                <input type="submit" class="AddButton"
+                       value="Usuń tablicę"
+                       onclick="return confirm('Czy na pewno chcesz usunąć tę tablicę?');">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            </form>
 
             <div class="container-fluid">
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -158,8 +161,10 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase"
                                                  style="color: #DBB9CC; text-align: center; font-size: 18px">${link.title}</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="text-align: center; font-size: 16px">${link.description}</div>
-                                        </div> <div class="col-auto">
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"
+                                                 style="text-align: center; font-size: 16px">${link.description}</div>
+                                        </div>
+                                        <div class="col-auto">
                                             <a href="${link.url}" target="_blank">
                                                 <c:choose>
                                                     <c:when test="${not empty link.thumbnailUrl}">
@@ -182,7 +187,8 @@
                                             <form action="/user/delete/${link.id}" method="post"
                                                   style="display: none;">
                                                 <input type="submit" class="btn btn-sm delete-btn"
-                                                       style="background-color: #DBB9CC; color: white; border-radius: 20px;" value="Usuń"
+                                                       style="background-color: #DBB9CC; color: white; border-radius: 20px;"
+                                                       value="Usuń"
                                                        onclick="return confirm('Czy na pewno chcesz usunąć ten link?');">
                                                 <input type="hidden" name="${_csrf.parameterName}"
                                                        value="${_csrf.token}"/>
@@ -201,19 +207,20 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase"
-                                                 style="color: #DBB9CC;text-align: center; font-size: 18px">${recipe.name}</div><div class="col-auto">
-                                            <a href="${recipe.urlToRecipy}" target="_blank">
-                                                <c:choose>
-                                                    <c:when test="${not empty recipe.imageUrl}">
-                                                        <img src="${recipe.imageUrl}" alt="Thumbnail"
-                                                             style="width: 100px; height: 100px;">
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <i class="fas fa-video fa-2x text-gray-300"></i>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </a>
-                                        </div>
+                                                 style="color: #DBB9CC;text-align: center; font-size: 18px">${recipe.name}</div>
+                                            <div class="col-auto">
+                                                <a href="${recipe.urlToRecipy}" target="_blank">
+                                                    <c:choose>
+                                                        <c:when test="${not empty recipe.imageUrl}">
+                                                            <img src="${recipe.imageUrl}" alt="Thumbnail"
+                                                                 style="width: 100px; height: 100px;">
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <i class="fas fa-video fa-2x text-gray-300"></i>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </a>
+                                            </div>
                                             <div class="nutrition-info">
                                                 <div class="nutrition-item">
                                                     <span>${recipe.calories}</span>
@@ -243,7 +250,8 @@
                                             <form action="/recipes/delete/${recipe.id}" method="post"
                                                   style="display: none;">
                                                 <input type="submit" class="btn btn-sm delete-btn"
-                                                       style="background-color: #DBB9CC; color: white; border-radius: 20px;" value="Usuń"
+                                                       style="background-color: #DBB9CC; color: white; border-radius: 20px;"
+                                                       value="Usuń"
                                                        onclick="return confirm('Czy na pewno chcesz usunąć ten przepis?');">
                                                 <input type="hidden" name="${_csrf.parameterName}"
                                                        value="${_csrf.token}"/>

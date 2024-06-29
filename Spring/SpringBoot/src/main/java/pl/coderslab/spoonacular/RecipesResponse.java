@@ -1,6 +1,5 @@
 package pl.coderslab.spoonacular;
 
-
 import java.util.List;
 
 public class RecipesResponse {

@@ -21,8 +21,6 @@ public class RecipesController {
         this.recipyDao = recipyDao;
     }
 
-
-
     @PostMapping("/saveRecipe")
     public String saveRecipy(
             @RequestParam("title") String name,
@@ -33,7 +31,6 @@ public class RecipesController {
             @RequestParam("protein") String protein,
             @RequestParam("fat") String fat,
             @RequestParam("boardId") Long boardId) {
-
 
         Board board = boardRepository.findById(boardId).orElse(null);
         RecipeEntity recipe = new RecipeEntity();
@@ -97,6 +94,5 @@ public class RecipesController {
 
         return "redirect:/boards/" + boardId + "/links";
     }
-
 }
 

@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Nutrients {
-private String name;
-private int amount;
+    private String name;
+    private int amount;
 
 }

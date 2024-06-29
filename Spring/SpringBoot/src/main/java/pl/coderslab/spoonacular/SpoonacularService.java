@@ -1,7 +1,5 @@
 package pl.coderslab.spoonacular;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -10,7 +8,6 @@ import pl.coderslab.recipes.RecipesResponse;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class SpoonacularService {
@@ -44,6 +41,7 @@ public class SpoonacularService {
             return Collections.emptyList();
         }
     }
+
     public List<Recipe> getRecipesByCategory(int page, String category) throws IOException {
         int offset = page * DEFAULT_NUMBER;
         String apiUrl = UriComponentsBuilder.fromHttpUrl(spoonacularBaseUrl)
@@ -62,6 +60,7 @@ public class SpoonacularService {
             return Collections.emptyList();
         }
     }
+
     public List<Recipe> exclude(int page, String category) throws IOException {
         int offset = page * DEFAULT_NUMBER;
         String apiUrl = UriComponentsBuilder.fromHttpUrl(spoonacularBaseUrl)

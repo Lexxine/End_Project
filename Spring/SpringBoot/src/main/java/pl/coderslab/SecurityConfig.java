@@ -31,15 +31,12 @@ public class SecurityConfig {
      * @TODO - change antMatchers after development
      */
 
-
     @Bean
     protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-            //    .antMatchers("/user/**", "/boards/**").hasRole("USER")
                .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/login", "/register", "/search","/error").permitAll()
-             //   .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login") // Custom login page
@@ -49,7 +46,6 @@ public class SecurityConfig {
                 .and()
                 .exceptionHandling()
                 .accessDeniedPage("/error");
-              //  .permitAll();
         return http.build();
     }
 

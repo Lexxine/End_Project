@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         heartButtons.forEach(function (button) {
-            button.addEventListener("click", function(event) {
+            button.addEventListener("click", function (event) {
                 modalForm.style.display = "block";
 
             });
