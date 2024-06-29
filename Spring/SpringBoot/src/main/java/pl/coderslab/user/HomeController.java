@@ -9,6 +9,7 @@ import pl.coderslab.board.BoardRepository;
 import pl.coderslab.recipes.Links;
 import pl.coderslab.recipes.LinksDao;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -20,10 +21,14 @@ public class HomeController {
 
     @Autowired
     private BoardRepository boardRepository;
+    @Autowired
+    UserService userService;
 
     @GetMapping("/add")
-    public String showAddLinkForm(Model model) {
-        model.addAttribute("boards", boardRepository.findAll());
+    public String showAddLinkForm(Model model, Principal principal) {
+        User user =  getCurrentUser(principal);
+        List<Board> boards = boardRepository.findAllByUserId(user.getId());
+        model.addAttribute("boards", boards);
         return "addForm";
     }
 
@@ -94,5 +99,8 @@ public class HomeController {
         linksDao.update(link);
 
         return "redirect:/boards/" + boardId + "/links";
+    }
+    private User getCurrentUser(Principal principal) {
+        return userService.findByUserName(principal.getName());
     }
 }

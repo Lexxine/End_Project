@@ -37,15 +37,18 @@ public class SecurityConfig {
         http
                 .authorizeRequests()
             //    .antMatchers("/user/**", "/boards/**").hasRole("USER")
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/login", "/register", "/search").permitAll()
+               .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/login", "/register", "/search","/error").permitAll()
              //   .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login") // Custom login page
                 .defaultSuccessUrl("/boards/list")
                 .permitAll()
-                .and().logout().logoutSuccessUrl("/login");
+                .and().logout().logoutSuccessUrl("/login")
+                .and()
+                .exceptionHandling()
+                .accessDeniedPage("/error");
               //  .permitAll();
         return http.build();
     }
