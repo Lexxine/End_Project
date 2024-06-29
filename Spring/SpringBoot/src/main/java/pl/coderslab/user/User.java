@@ -24,7 +24,7 @@ public class User {
     @NotBlank
     @Size(min = 6, message = "Hasło musi mieć co najmniej 6 znaków")
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,}$",
-            message = "Hasło musi zawierać co najmniej jedną cyfrę, jedną małą literę, jedną dużą literę oraz jeden znak specjalny")
+            message = "Hasło musi zawierać co najmniej jedną cyfrę, jedną małą literę, jedną dużą literę, jeden znak specjalny oraz mieć przynajmniej 8 znaków")
     private String password;
     private int enabled;
     @ManyToMany(fetch = FetchType.EAGER)

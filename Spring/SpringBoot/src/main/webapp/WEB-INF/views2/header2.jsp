@@ -23,7 +23,7 @@
             font-family: 'Nunito', sans-serif;
         }
         #content-wrapper {
-            background: url("/resources/img/iStock-912353206.jpg") no-repeat center center;
+            background: url("/resources/img/iStock-1305028569.jpg") no-repeat center center;
             background-size: cover;
             height: 100vh;
             display: flex;
@@ -122,7 +122,7 @@
         <div class="container-fluid text-center">
 
             <!-- Page Heading -->
-            <h1 class="h3 mb-0 text-gray-800" style="font-size: 40px">Zaloguj się</h1>
+            <h1 class="h3 mb-0 " style="font-size: 40px;color: white">Zaloguj się</h1>
 
             <!-- Your content here -->
             <div class="content-container" id="login-form">

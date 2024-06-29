@@ -1,9 +1,6 @@
 package pl.coderslab.board;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -74,16 +71,26 @@ RecipyDao recipyDao;
         List<Recipe> recipes = spoonacularService.getRecipes(page);
         model.addAttribute("recipes", recipes);
         session.setAttribute("currentPage", page);
+        model.addAttribute("currentPage", page);
         return "board/list2Board";
     }
     @PostMapping("/fetchRecipes")
-    public String fetchRecipes(Model model, Principal principal, @RequestParam("query") String query, @RequestParam(defaultValue = "0") int page) {
+    public String fetchRecipes(Model model, Principal principal,HttpSession session,@RequestParam("query") String query, @RequestParam(defaultValue = "0") int page) {
+
         try {
+            if (query != null) {
+                session.setAttribute("query", query);
+            } else {
+                query = (String) session.getAttribute("query");
+            }
             User user = getCurrentUser(principal);
             List<Board> boards = boardRepository.findAllByUserId(user.getId());
             model.addAttribute("boards", boards);
             List<Recipe> recipes = spoonacularService.getRecipesByCategory(page, query);
             model.addAttribute("recipes", recipes);
+            session.setAttribute("currentPage", page);
+            model.addAttribute("currentPage", page);
+            model.addAttribute("query", query);
             return "recipes";
         } catch (IOException e) {
             e.printStackTrace();
@@ -91,14 +98,22 @@ RecipyDao recipyDao;
         }
     }
     @PostMapping("/fetchRecipesWithFilters")
-    public String exclude(Model model, Principal principal, @RequestParam("query") String query, @RequestParam(defaultValue = "0") int page) {
+    public String exclude(Model model, Principal principal,HttpSession session, @RequestParam("query") String query, @RequestParam(defaultValue = "0") int page) {
         try {
+            if (query != null) {
+                session.setAttribute("query", query);
+            } else {
+                query = (String) session.getAttribute("query");
+            }
             User user = getCurrentUser(principal);
             List<Board> boards = boardRepository.findAllByUserId(user.getId());
             model.addAttribute("boards", boards);
             List<Recipe> recipes = spoonacularService.exclude(page, query);
             model.addAttribute("recipes", recipes);
-            return "recipes";
+            session.setAttribute("currentPage", page);
+            model.addAttribute("currentPage", page);
+            model.addAttribute("query", query);
+            return "/board/recipes2";
         } catch (IOException e) {
             e.printStackTrace();
             return "error";

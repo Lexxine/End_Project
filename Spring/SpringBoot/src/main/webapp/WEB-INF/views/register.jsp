@@ -24,7 +24,7 @@
             font-family: 'Nunito', sans-serif;
         }
         #content-wrapper {
-            background: url("/resources/img/iStock-912353206.jpg") no-repeat center center;
+            background: url("/resources/img/iStock-1305028569.jpg") no-repeat center center;
             background-size: cover;
             height: 100vh;
             display: flex;
@@ -39,6 +39,10 @@
             padding: 20px;
             max-width: 600px;
             text-align: center;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
         }
         .content-container h1 {
             margin-bottom: 20px;
@@ -69,6 +73,7 @@
             margin-bottom: 5px;
             text-align: left;
             width: 100%;
+
         }
         .content-container#login-form form input[type="text"],
         .content-container#login-form form input[type="password"] {
@@ -121,7 +126,7 @@
         <div class="container-fluid text-center">
 
             <!-- Page Heading -->
-            <h1 class="h3 mb-0 text-gray-800" style="font-size: 40px">Zarejestruj się</h1>
+            <h1 class="h3 mb-0 " style="font-size: 40px; color: white">Zarejestruj się</h1>
 
             <!-- Your content here -->
             <div class="content-container" id="login-form">
@@ -137,6 +142,7 @@
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                 </form:form>
 
+                <p>Masz już konto? <a href="/login" id="Main" style="color: white">Zaloguj się</a></p>
             </div>
 
         </div>

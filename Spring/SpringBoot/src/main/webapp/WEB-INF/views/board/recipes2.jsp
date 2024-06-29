@@ -75,7 +75,6 @@
             border-radius: 10px;
             flex: 0 0 auto;
             margin-bottom: 20px; /* Increase the gap between rows */
-
         }
 
         .recipe-item:hover {
@@ -92,7 +91,6 @@
             transform: translateX(-50%);
             border-radius: 50%; /* Ensure the image is a perfect circle */
         }
-
 
         .recipe-info h5 {
             margin-top: 0;
@@ -120,7 +118,6 @@
             transition: transform 0.3s ease;
             text-align: center;
             color: #5a5c69;
-
         }
 
         .recipe-item:hover .recipe-info {
@@ -232,7 +229,8 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0, 0, 0, 0.4);
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
         }
 
         .modal-content {
@@ -247,6 +245,23 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+        }
+
+        .modal-content form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .modal-content label {
+            margin-bottom: 10px;
+        }
+
+        .modal-content select,
+        .modal-content button {
+            width: 100%;
+            margin-bottom: 10px;
         }
         .modal-content2 {
             background-color: transparent;
@@ -286,32 +301,7 @@
         .modal-content2 button:hover {
             background-color: #c290a5;
         }
-        /* Stylizacja selecta */
-        .modal-content select {
-            width: 100%;
-            padding: 10px;
-            margin-top: 10px;
-            margin-bottom: 20px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
 
-        /* Stylizacja przycisku zapisz */
-        .modal-content button {
-            background-color: #dfb1c7;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .modal-content button:hover {
-            background-color: #c290a5;
-        }
 
         .pagination {
             display: flex;
@@ -334,22 +324,28 @@
             max-width: 1500px;
             padding: 20px;
             background-color: white;
-            flex-direction: column;
-            gap: 15px;
-            justify-content: center;
-
+            align-self: center;
         }
 
         .content-container {
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
         }
 
         .container h1 {
             text-align: center;
-
         }
-
+        #Main {
+            margin-top: 40px;
+            margin-left: 40px;
+            text-align: center;
+            background-color: rgba(219, 185, 204, 0.89);
+            border-color: rgba(219, 185, 204, 0.75);
+            margin-bottom: 30px;
+            border-radius: 30px;
+            padding: 10px 25px;
+            font-size: 18px;
+        }
         #Main2 {
 
             margin-left: 40px;
@@ -365,6 +361,7 @@
 
 </head>
 <body id="page-top">
+<a href="/boards/list" id="Main" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Strona główna</a>
 <!-- Page Wrapper -->
 <div id="wrapper">
 
@@ -381,11 +378,10 @@
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-800">Tablice</h1>
                     <div class="d-flex flex-column">
-                        <a href="/boards/add" id="Main2"
-                           class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm mb-2"
+                        <a href="/boards/add" id="Main2" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm mb-2"
                            style="margin-top: 20px;">Dodaj tablicę</a>
 
-                        <a href="/login" id="Main2" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm ">Wyloguj</a>
+                        <a href="/login" id="Main2" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Wyloguj</a>
                     </div>
                 </div>
 
@@ -403,8 +399,7 @@
                                                 <a href="/boards/${board.id}/links"
                                                    class="text-xs font-weight-bold text-primary text-uppercase mb-1"
                                                    style="color: #DBB9CC;font-size: 18px">${board.name}</a>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800"
-                                                     style="font-size: 15px">${board.description}</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800" style="font-size: 15px">${board.description}</div>
                                             </div>
                                         </div>
                                         <div class="row mt-3">
@@ -433,6 +428,7 @@
                 <!-- Recipe Section -->
                 <div class="container">
                     <h1>Lista przepisów</h1>
+
                     <div class="modal-content2">
                         <form id="filters" action="/boards/fetchRecipesWithFilters" method="post">
                             <label for="selectElement">Alergeny:</label>
@@ -507,18 +503,18 @@
                             <c:forEach var="recipe" items="${recipes}">
                                 <div class="recipe-item">
                                     <div id="saveModal" class="modal">
-                                        <div class="modal-content">
+                                        <div class="modal-content2">
                                             <span class="close"></span>
                                             <form id="saveRecipeForm" action="/recipes/saveRecipe" method="post">
                                                 <input type="hidden" name="title" id="recipeName"
                                                        value="${recipe.title}">
                                                 <input type="hidden" name="image" id="recipeImageUrl"
-                                                        <c:choose>
-                                                       <c:when test="${not empty recipe.image}">
+                                                <c:choose>
+                                                <c:when test="${not empty recipe.image}">
                                                        value="${recipe.image}"
                                                 </c:when>
                                                 <c:otherwise>
-                                                    value="/resources/img/iStock-1166149111.jpg"
+                                                       value="/resources/img/iStock-1166149111.jpg"
                                                 </c:otherwise>
                                                 </c:choose>>
                                                 <input type="hidden" name="sourceUrl" id="recipeUrl"
@@ -549,9 +545,7 @@
                                                 </select>
                                                 <input type="hidden" name="${_csrf.parameterName}"
                                                        value="${_csrf.token}"/>
-                                                <button type="submit" class="btn btn-primary"
-                                                        style="border-radius: 20px">Zapisz
-                                                </button>
+                                                <button type="submit" class="btn btn-primary">Zapisz</button>
                                             </form>
                                         </div>
                                     </div>
@@ -559,13 +553,13 @@
                                         <i class="heart-icon fas fa-heart"></i>
                                     </button>
                                     <c:choose>
-                                    <c:when test="${not empty recipe.image}">
-                                    <img src="${recipe.image}">
-                                    </c:when>
-                                    <c:otherwise>
-                                        <img src="/resources/img/iStock-1166149111.jpg">
-<%--                                        <i class="fas fa-utensils fa-2x text-gray-300" style="width: 60%; height: 60%; position: absolute; top: 5%; left: 50%; transform: translateX(-50%); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 3em; color: gray;"></i>--%>
-                                    </c:otherwise>
+                                        <c:when test="${not empty recipe.image}">
+                                            <img src="${recipe.image}">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <img src="/resources/img/iStock-1166149111.jpg">
+                                            <%--                                        <i class="fas fa-utensils fa-2x text-gray-300" style="width: 60%; height: 60%; position: absolute; top: 5%; left: 50%; transform: translateX(-50%); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 3em; color: gray;"></i>--%>
+                                        </c:otherwise>
                                     </c:choose>
                                     <a href="${recipe.sourceUrl}" target="_blank" class="recipe-link">
                                         <div class="recipe-name-overlay">
@@ -576,6 +570,7 @@
                                                   rel="stylesheet">
                                             <h5>${recipe.title}</h5>
                                             <p>Wartosć odżywcza na 1 porcję:</p>
+
                                             <div class="nutrition-info">
                                                 <div class="nutrition-info">
                                                     <c:forEach var="nutrient" items="${recipe.nutrition.nutrients}">
@@ -621,14 +616,25 @@
                         </div>
                     </div>
                     <div class="pagination">
-                    <c:if test="${currentPage > 0}">
-                        <a href="${pageContext.request.contextPath}/boards/list?page=${currentPage - 1}"> Poprzednia   </a>
-                    </c:if>
-                    <span> Strona: ${currentPage}</span>
-                    <a href="${pageContext.request.contextPath}/boards/list?page=${currentPage + 1}">   Następna </a>
+                        <c:if test="${currentPage > 0}">
+                            <form action="${pageContext.request.contextPath}/boards/fetchRecipesWithFilters" method="post" style="display:inline;">
+                                <input type="hidden" name="page" value="${currentPage - 1}" />
+                                <input type="hidden" name="query" value="${query}" />
+                                <button type="submit" style="background: none; border: none; color: #dfb1c7";>Poprzednia</button>
+                                <input type="hidden" name="${_csrf.parameterName}"
+                                       value="${_csrf.token}"/>
+                            </form>
+                        </c:if>
+                        <span>Strona: ${currentPage}</span>
+                        <form action="${pageContext.request.contextPath}/boards/fetchRecipesWithFilters" method="post" style="display:inline;">
+                            <input type="hidden" name="page" value="${currentPage + 1}" />
+                            <input type="hidden" name="query" value="${query}" />
+                            <button type="submit" style="background: none; border: none; color: #dfb1c7;">Następna</button>
+                            <input type="hidden" name="${_csrf.parameterName}"
+                                   value="${_csrf.token}"/>
+                        </form>
+                    </div>
                 </div>
-                </div>
-
 
 
             </div>
