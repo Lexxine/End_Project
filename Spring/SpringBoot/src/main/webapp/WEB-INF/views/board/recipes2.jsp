@@ -460,7 +460,7 @@
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             </form>
                             <form id="mainCourse" action="/boards/fetchRecipes" method="post">
-                                <input type="hidden" name="query" value="main course">
+                                <input type="hidden" name="query" value="lunch">
                                 <button type="submit">Dania główne</button>
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             </form>

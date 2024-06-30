@@ -27,9 +27,6 @@ public class SecurityConfig {
     RestTemplate restTemplate(){
         return new RestTemplate();
     }
-    /**
-     * @TODO - change antMatchers after development
-     */
 
     @Bean
     protected SecurityFilterChain configure(HttpSecurity http) throws Exception {

@@ -1,4 +1,4 @@
-package pl.coderslab.user;
+package pl.coderslab.recipes;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -6,8 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.board.Board;
 import pl.coderslab.board.BoardRepository;
-import pl.coderslab.recipes.Links;
-import pl.coderslab.recipes.LinksDao;
+import pl.coderslab.user.User;
+import pl.coderslab.user.UserService;
+
 import java.security.Principal;
 import java.util.List;
 
